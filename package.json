@@ -4,6 +4,11 @@
   "description": "Learn 20 worlds every day",
   "main": "index.js",
   "scripts": {
+    "build": "rm -rf public/* && webpack -p",
+    "clean": "rm -fr public/*",
+    "status": "webpack --json --profile > stats.json",
+    "serve": "webpack-dev-server --inline",
+    "apiserve": "node src/backend/index.js",
     "test": "node test/index.js"
   },
   "repository": {
@@ -22,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/stepanmas/gold20/issues"
   },
-  "homepage": "https://github.com/stepanmas/gold20#readme"
+  "homepage": "https://github.com/stepanmas/gold20#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
 }

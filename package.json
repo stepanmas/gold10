@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/stepanmas/gold20#readme",
   "dependencies": {
+    "angular": "^1.6.1",
     "axios": "^0.15.3",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
@@ -45,6 +46,8 @@
     "file": "^0.2.2",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.24.1",
+    "less": "^2.7.2",
+    "less-loader": "^2.2.3",
     "mongodb": "^2.2.21",
     "ng-redux": "^3.4.0-beta.1",
     "postcss": "^5.2.7",

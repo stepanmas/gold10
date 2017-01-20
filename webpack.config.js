@@ -46,11 +46,11 @@
         },
 
         plugins: [
-            /*new webpack.ProvidePlugin(
+            new webpack.ProvidePlugin(
                 {
-                    "React": "react"
+                    "angular": "angular"
                 }
-            ),*/
+            ),
 
             /*new CopyWebpackPlugin(
                 [
@@ -79,12 +79,13 @@
 
             new webpack.HotModuleReplacementPlugin(),
 
-            /*new HtmlWebpackPlugin(
+            new HtmlWebpackPlugin(
                 {
                     hash: true,
-                    filename: 'index.html'
+                    filename: 'index.html',
+                    template: path.resolve(BACK_DIR, 'index.html')
                 }
-            )*/
+            )
         ],
 
         resolve: {

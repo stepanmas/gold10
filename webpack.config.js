@@ -46,12 +46,6 @@
         },
 
         plugins: [
-            new webpack.ProvidePlugin(
-                {
-                    "angular": "angular"
-                }
-            ),
-
             /*new CopyWebpackPlugin(
                 [
                     {

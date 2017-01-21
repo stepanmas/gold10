@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(morgan('combined'));
 
 app.get(
-    '*', function (req, res)
+    '/', function (req, res)
     {
         let provider = new mongoProvider();
 
@@ -27,7 +27,14 @@ app.get(
     }
 );
 
-app.listen(
+io.on(
+    'connection', function (socket)
+    {
+        console.log('a user connected');
+    }
+);
+
+http.listen(
     3000, function ()
     {
         console.log('Express server listening on port 3000');

@@ -52,6 +52,11 @@
                         context: 'favicons',
                         from: '**/*',
                         to: BUILD_DIR
+                    },
+                    {
+                        context: 'modules',
+                        from   : '**/*.html',
+                        to     : BUILD_DIR
                     }
                 ]
             ),

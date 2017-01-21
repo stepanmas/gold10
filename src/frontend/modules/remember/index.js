@@ -10,7 +10,7 @@ class Remember {
     {
         $scope.data = 'here';
 
-        //socket.emit('message', 'here');
+        socket.emit('message', 'heres');
     }
 }
 

@@ -46,19 +46,15 @@
         },
 
         plugins: [
-            /*new CopyWebpackPlugin(
+            new CopyWebpackPlugin(
                 [
                     {
-                        from: 'modules/serviceWorker/workout-worker.js',
-                        to: 'workout-worker.js'
-                    },
-                    {
-                        context: 'modules/favicon',
-                        from: '**!/!*',
+                        context: 'favicons',
+                        from: '**/*',
                         to: BUILD_DIR
                     }
                 ]
-            ),*/
+            ),
 
             new webpack.SourceMapDevToolPlugin(
                 {
@@ -99,7 +95,7 @@
 
         devServer: {
             host: 'localhost',
-            port: 8080,
+            port: 8090,
             contentBase: BUILD_DIR,
             outputPath: BUILD_DIR,
             hot: true,

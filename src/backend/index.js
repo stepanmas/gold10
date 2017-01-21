@@ -1,21 +1,35 @@
-const express = require('express');
-const app     = express();
-const bodyParser = require('body-parser');
+const express       = require('express');
+const app           = express();
+const bodyParser    = require('body-parser');
+const morgan        = require('morgan');
+const mongoProvider = require('./modules/mongoProvider');
+
+const http = require('http').Server(app);
+const io   = require('socket.io')(http);
 
 app.use(bodyParser.json());
+app.use(morgan('combined'));
 
-app.post(
+app.get(
     '*', function (req, res)
     {
-        console.log(req.body);
+        let provider = new mongoProvider();
 
-        res.json(req.body);
+        provider.getUser(
+            {
+                one: 1
+            },
+            (r)=>
+            {
+                res.json(r);
+            }
+        );
     }
 );
 
 app.listen(
     3000, function ()
     {
-        console.log('Example app listening on port 3000!');
+        console.log('Express server listening on port 3000');
     }
 );

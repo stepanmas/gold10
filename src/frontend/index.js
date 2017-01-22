@@ -6,12 +6,14 @@ import uiRouter from 'angular-ui-router';
 
 // Other
 import 'style/global.less';
+import io from 'socket.io-client';
 
 // Application
 import Remember from 'remember';
 import Auth from 'auth';
 
 const app = angular.module('app', [uiRouter]);
+window.socket = io();
 
 app
     .controller('remember', ['$scope', Remember])

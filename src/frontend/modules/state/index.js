@@ -8,9 +8,10 @@ export default class {
                 added    : 'timestamp',
                 changed  : 'timestamp',
                 learned  : 'timestamp',
-                forgot   : 0,
-                word     : 'Word collection',
+                forgot   : [],
+                original : 'Word collection',
                 translate: 'Коллекция слов',
+                example  : 'a sentence',
                 imagine  : 'https://placeholdit.imgix.net/~text?txtsize=33&txt=140%C3%97100&w=140&h=100'
             }
         ];

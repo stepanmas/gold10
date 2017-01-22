@@ -30,19 +30,20 @@ app.get(
 io.on(
     'connection', function (socket)
     {
-        console.log('a user connected');
-
         socket.on(
-            'disconnect', function ()
+            'today', function (msg)
             {
-                console.log('user disconnected');
-            }
-        );
+                console.log(`got: today`);
 
-        socket.on(
-            'message', function (msg)
-            {
-                console.log(msg);
+                socket.emit(
+                    'today',
+                    [
+                        {
+                            original : 'essential',
+                            translate: 'необходимый'
+                        }
+                    ]
+                );
             }
         );
     }

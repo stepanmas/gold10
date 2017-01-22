@@ -1,1 +1,13 @@
-remember list
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-group">
+                <li ng-repeat="item in today" class="list-group-item">{{item.original}} &mdash; {{item.translate}}</li>
+            </ul>
+
+            <hr>
+
+            <button class="btn btn-success">Start learn</button>
+        </div>
+    </div>
+</div>

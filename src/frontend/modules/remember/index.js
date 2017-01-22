@@ -1,16 +1,32 @@
 "use strict";
 
-import io from 'socket.io-client';
-
-var socket = io();
-
+// to read https://habrahabr.ru/post/180365/
+// https://habrahabr.ru/post/250637/
+// https://habrahabr.ru/post/182670/
+// https://habrahabr.ru/post/250149/
 
 class Remember {
     constructor($scope)
     {
-        $scope.data = 'here';
+        this.bind();
+        this.$scope = $scope;
 
-        socket.emit('message', 'heres');
+        socket.emit('today');
+    }
+
+    bind()
+    {
+        socket.on(
+            'today', (r) =>
+            {
+                this.$scope.$apply(
+                    () =>
+                    {
+                        this.$scope.today = r;
+                    }
+                );
+            }
+        );
     }
 }
 

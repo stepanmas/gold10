@@ -9,6 +9,7 @@
     "status": "webpack --json --profile > stats.json",
     "serve": "webpack-dev-server --inline",
     "apiserve": "node src/backend/index.js",
+    "mongoserve": "mongod --dbpath src/backend/db/",
     "test": "node test/index.js"
   },
   "repository": {

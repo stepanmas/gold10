@@ -1,6 +1,5 @@
 // Angular and bootstrap
 import angular from 'angular';
-import Modal from 'angular-ui-bootstrap/src/modal';
 import 'bootstrap/dist/css/bootstrap.css';
 import uiRouter from 'angular-ui-router';
 
@@ -16,8 +15,8 @@ const app = angular.module('app', [uiRouter]);
 window.socket = io();
 
 app
-    .controller('remember', ['$scope', Remember])
-    .controller('auth', ['$scope', Auth])
+    .controller('remember', [Remember])
+    .controller('auth', [Auth])
 
     .config(
         [
@@ -33,6 +32,14 @@ app
                             controller : ['$scope', Remember]
                         }
                     )
+                    .state(
+                        'auth', {
+                            url        : '/auth',
+                            templateUrl: "auth/form.html",
+                            controller : ['$scope', Auth]
+                        }
+                    )
+
                     /*.state(
                         'install', {
                             url        : '/auth',

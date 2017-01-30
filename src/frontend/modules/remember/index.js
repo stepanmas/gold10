@@ -1,12 +1,7 @@
 "use strict";
 
-// to read https://habrahabr.ru/post/180365/
-// https://habrahabr.ru/post/250637/
-// https://habrahabr.ru/post/182670/
-// https://habrahabr.ru/post/250149/
-
 class Remember {
-    constructor($scope)
+    constructor($scope, $location)
     {
         this.bind();
         this.$scope = $scope;

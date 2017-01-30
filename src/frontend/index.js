@@ -11,14 +11,18 @@ import io from 'socket.io-client';
 import Remember from 'remember';
 import Auth from 'auth';
 
-const app = angular.module('app', [uiRouter]);
-window.socket = io();
+const socket = angular.module('socket', []);
 
-app
-    .controller('remember', [Remember])
-    .controller('auth', [Auth])
+socket.factory(
+    'io', function ()
+    {
+        return io();
+    }
+);
 
-    .config(
+const app = angular.module('app', ['socket', uiRouter]);
+
+app.config(
         [
             '$stateProvider',
             '$urlRouterProvider',
@@ -29,41 +33,39 @@ app
                         'list', {
                             url        : '/',
                             templateUrl: "remember/list.html",
-                            controller : ['$scope', Remember]
+                            controller : ['$scope', '$location', 'io', Remember],
+                            isAuth: function()
+                            {
+                                return localStorage.getItem('username');
+                            }
                         }
                     )
                     .state(
                         'auth', {
                             url        : '/auth',
                             templateUrl: "auth/form.html",
-                            controller : ['$scope', Auth]
+                            controller : ['$scope', '$location', 'io', Auth]
                         }
                     )
-
-                    /*.state(
-                        'install', {
-                            url        : '/auth',
-                            templateUrl: "src/modules/install/install.html",
-                            controller : ['$scope', InstallPage]
-                        }
-                    )
-                    .state(
-                        'lang', {
-                            url        : '/add',
-                            templateUrl: "src/modules/lang/lang.html",
-                            controller : ['$scope', '$stateParams', LangPage]
-                        }
-                    )
-                    .state(
-                        'lang', {
-                            url        : '/learn',
-                            templateUrl: "src/modules/lang/lang.html",
-                            controller : ['$scope', '$stateParams', LangPage]
-                        }
-                    )*/
                 ;
                 $urlRouterProvider.otherwise('/');
             }
         ]
     )
+   .run(
+       [
+           '$rootScope',
+           '$location',
+           function ($rootScope, $location)
+           {
+               $rootScope.$on(
+                   '$stateChangeStart', function (ev, next)
+                   {
+                       if (next.isAuth && !next.isAuth())
+                           $location.path('/auth');
+                   }
+               );
+           }
+       ]
+   )
 ;

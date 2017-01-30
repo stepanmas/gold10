@@ -1,8 +1,11 @@
 "use strict";
 
 class Remember {
-    constructor($scope, $location)
+    constructor($scope, $location, socket)
     {
+        this.io = socket;
+        this.$location = $location;
+
         this.bind();
         this.$scope = $scope;
 
@@ -11,7 +14,7 @@ class Remember {
 
     bind()
     {
-        socket.on(
+        this.io.on(
             'today', (r) =>
             {
                 this.$scope.$apply(

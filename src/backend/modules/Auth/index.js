@@ -1,5 +1,5 @@
 const MongoProvider = require('../mongoProvider');
-const crypto = require('crypto');
+const crypto        = require('crypto');
 
 module.exports = class {
     constructor()
@@ -44,48 +44,49 @@ module.exports = class {
     
     hasValidData(user_data)
     {
-        return false;
         if (user_data)
         {
-            if (!user_data.name && !user_data.password)
+            if (!user_data.email || !user_data.password)
+            {
                 return false;
+            }
             
             return true;
         }
         
-        return true;
+        return false;
     }
     
     sign(user_data, cb)
     {
+        if (!this.hasValidData(user_data))
+        {
+            cb({error: 'An user data is invalid'});
+            return;
+        }
+        
         this.mongo.connect(
             (db) =>
             {
-                
                 db.collection(
                     'users', (err, collection) =>
                     {
                         if (err) throw err;
                         
+                        console.log('we find: ' + user_data.email);
                         
-                        if (!this.hasValidData(user_data))
-                        {
-                            cb({error: 'An user data is invalid'});
-                            return;
-                        }
-                        
-                        let user = collection.find(
+                        collection.findOne(
                             {
                                 email: user_data.email
                             },
                             (err, user) =>
                             {
-                                if (!user.email)
+                                if (err) throw err;
+                                
+                                if (!user)
                                 {
                                     user = this.signUp(user_data, collection);
                                 }
-                                
-                                console.log(user, user.email);
                                 
                                 cb(
                                     {
@@ -97,25 +98,24 @@ module.exports = class {
                         );
                     }
                 );
-                
             }
         );
     }
     
     signUp(user_data, collection)
     {
-        let md5sum  = crypto.createHash('md5');
-        let newUser = Object.assign(
-            {},
-            user_data,
-            {
-                signup: Date.now(),
-                signin: Date.now(),
-                key   : md5sum.digest('hex')
-            }
-        );
+        let now      = Date.now();
+        let md5sum   = crypto.createHmac('sha1', now.toString());
+        let password = crypto.createHmac('sha1', user_data.password);
+        let newUser  = {
+            email   : user_data.email,
+            password: password.digest('hex'),
+            signup  : Date.now(),
+            signin  : Date.now(),
+            key     : md5sum.digest('hex')
+        };
         
-        collection.insert(newUser);
+        collection.insertOne(newUser);
         return newUser;
     }
 };

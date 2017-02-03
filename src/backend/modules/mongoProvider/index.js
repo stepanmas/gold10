@@ -13,9 +13,18 @@ class MongoProvider {
             {
                 if (err) throw err;
                 
-                payload(db);
-                
-                db.close();
+                !function ()
+                {
+                    payload(db);
+    
+                    return Promise.reject();
+                }().then(() => {db.close()}).catch(
+                    (err) =>
+                    {
+                        if (err)
+                            console.log(err);
+                    }
+                );
             }
         );
     }

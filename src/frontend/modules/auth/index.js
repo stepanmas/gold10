@@ -19,6 +19,21 @@ class Auth {
             function (r)
             {
                 console.log(r);
+                if (r.error)
+                {
+                    $scope.status = {
+                        show   : true,
+                        code   : r.code || 'danger',
+                        message: r.error
+                    };
+                    $scope.$digest();
+                    return;
+                }
+                
+                Object.assign($scope.status, { show: false });
+                $scope.$digest();
+                
+                
             }
         );
     }

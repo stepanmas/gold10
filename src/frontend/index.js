@@ -20,38 +20,53 @@ socket.factory(
     }
 );
 
-const app = angular.module('app', ['socket', uiRouter]);
+const getPrivateData = angular.module('getUserData', []);
+
+getPrivateData.factory(
+    'getUserData', function ()
+    {
+        return function()
+        {
+            return {
+                username: localStorage.getItem('username'),
+                key     : localStorage.getItem('key')
+            };
+        };
+    }
+);
+
+const app = angular.module('app', ['socket', 'getUserData', uiRouter]);
 
 app.config(
-        [
-            '$stateProvider',
-            '$urlRouterProvider',
-            function ($stateProvider, $urlRouterProvider)
-            {
-                $stateProvider
-                    .state(
-                        'list', {
-                            url        : '/',
-                            templateUrl: "remember/list.html",
-                            controller : ['$scope', '$location', 'io', Remember],
-                            isAuth: function()
-                            {
-                                return localStorage.getItem('username');
-                            }
+    [
+        '$stateProvider',
+        '$urlRouterProvider',
+        function ($stateProvider, $urlRouterProvider)
+        {
+            $stateProvider
+                .state(
+                    'list', {
+                        url        : '/',
+                        templateUrl: "remember/list.html",
+                        controller : ['$scope', '$location', 'io', 'getUserData', Remember],
+                        isAuth     : function ()
+                        {
+                            return (localStorage.getItem('username') && localStorage.getItem('key'));
                         }
-                    )
-                    .state(
-                        'auth', {
-                            url        : '/auth',
-                            templateUrl: "auth/form.html",
-                            controller : ['$scope', '$location', 'io', Auth]
-                        }
-                    )
-                ;
-                $urlRouterProvider.otherwise('/');
-            }
-        ]
-    )
+                    }
+                )
+                .state(
+                    'auth', {
+                        url        : '/auth',
+                        templateUrl: "auth/form.html",
+                        controller : ['$scope', '$location', 'io', Auth]
+                    }
+                )
+            ;
+            $urlRouterProvider.otherwise('/');
+        }
+    ]
+)
    .run(
        [
            '$rootScope',

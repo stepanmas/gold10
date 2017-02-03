@@ -2,15 +2,20 @@ const express    = require('express');
 const app        = express();
 const bodyParser = require('body-parser');
 const morgan     = require('morgan');
-const Auth       = require('./modules/Auth');
 
+// modules
+const Auth     = require('./modules/Auth');
+const Remember = require('./modules/Remember');
+
+// server
 const http = require('http').Server(app);
 const io   = require('socket.io')(http);
 
 app.use(bodyParser.json());
 app.use(morgan('combined'));
 
-const auth = new Auth();
+const auth     = new Auth();
+const remember = new Remember();
 
 app.get(
     '/', function (req, res)
@@ -23,18 +28,29 @@ io.on(
     'connection', function (socket)
     {
         socket.on(
-            'today', function (msg)
+            'today', function (privateData)
             {
-                console.log(`got: today`);
-                
-                socket.emit(
-                    'today',
-                    [
-                        {
-                            original : 'essential',
-                            translate: 'необходимый'
-                        }
-                    ]
+                auth.access(
+                    privateData,
+                    (userData) =>
+                    {
+                        if (userData.error)
+                            socket.emit(
+                                'access error',
+                                userData
+                            );
+                        else
+                            remember.list(
+                                userData, list =>
+                                {
+                                    socket.emit(
+                                        'today',
+                                        list
+                                    );
+                                }
+                            );
+                        
+                    }
                 );
             }
         );

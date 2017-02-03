@@ -3,7 +3,8 @@
 class Auth {
     constructor($scope, $location, socket)
     {
-        $scope.io = socket;
+        this.$scope = $scope;
+        $scope.io   = socket;
         
         $scope.email    = null;
         $scope.password = null;
@@ -14,11 +15,12 @@ class Auth {
             message: null
         };
         
+        this.$location = $location;
+        
         socket.on(
             'signed',
-            function (r)
+            (r) =>
             {
-                console.log(r);
                 if (r.error)
                 {
                     $scope.status = {
@@ -30,10 +32,21 @@ class Auth {
                     return;
                 }
                 
-                Object.assign($scope.status, { show: false });
+                Object.assign($scope.status, {show: false});
                 $scope.$digest();
                 
-                
+                this.signed(r);
+            }
+        );
+    
+        socket.on(
+            'access error',
+            (error) => {
+                console.log(error);
+                localStorage.removeItem('username');
+                localStorage.removeItem('key');
+                this.$location.path('/');
+                this.$scope.$apply();
             }
         );
     }
@@ -47,6 +60,14 @@ class Auth {
                 password: this.password
             }
         );
+    }
+    
+    signed(r)
+    {
+        localStorage.setItem('username', r.email);
+        localStorage.setItem('key', r.key);
+        this.$location.path('/');
+        this.$scope.$apply();
     }
 }
 

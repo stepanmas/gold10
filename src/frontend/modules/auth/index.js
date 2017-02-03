@@ -1,9 +1,12 @@
 "use strict";
 
 class Auth {
-    constructor($scope, $location, socket)
+    constructor($scope, $rootScope, $location, socket)
     {
+        $rootScope.setActive('Auth');
+        
         this.$scope = $scope;
+        this.$rootScope = $rootScope;
         $scope.io   = socket;
         
         $scope.email    = null;
@@ -66,6 +69,7 @@ class Auth {
     {
         localStorage.setItem('username', r.email);
         localStorage.setItem('key', r.key);
+        this.$rootScope.setUsername(r.email);
         this.$location.path('/');
         this.$scope.$apply();
     }

@@ -9,9 +9,13 @@ import 'style/global.less';
 // Application
 import Remember from 'remember';
 import Auth from 'auth';
+import Navbar from 'navbar';
 import 'factorys';
 
 const app = angular.module('app', ['socket', 'getUserData', uiRouter]);
+
+app
+    .controller('navbar', ['$scope', '$rootScope', Navbar]);
 
 app.config(
     [
@@ -35,14 +39,14 @@ app.config(
                     'auth', {
                         url        : '/auth',
                         templateUrl: "auth/form.html",
-                        controller : ['$scope', '$location', 'io', Auth]
+                        controller : ['$scope', '$rootScope', '$location', 'io', Auth]
                     }
                 )
                 .state(
                     'add', {
                         url        : '/add',
                         templateUrl: "add/form.html",
-                        controller : ['$scope', '$location', 'io', 'getUserData', Auth],
+                        controller : ['$scope', '$location', 'io', 'getUserData', Navbar, Auth],
                         isAuth: function ()
                         {
                             return (localStorage.getItem('username') && localStorage.getItem('key'));

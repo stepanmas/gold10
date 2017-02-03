@@ -18,11 +18,10 @@ export default class {
 
         let users = {
             id      : 1,
-            name    : 'stepan.mas.work',
+            email    : 'stepan.mas.work',
             password: 'hash',
             signup  : 'timestamp',
             signin  : 'timestamp',
-            email   : 'stepan.mas.work@gmail.com',
             key     : 'hash'
         };
     }

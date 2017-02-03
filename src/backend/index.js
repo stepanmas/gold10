@@ -1,8 +1,8 @@
-const express       = require('express');
-const app           = express();
-const bodyParser    = require('body-parser');
-const morgan        = require('morgan');
-const mongoProvider = require('./modules/mongoProvider');
+const express    = require('express');
+const app        = express();
+const bodyParser = require('body-parser');
+const morgan     = require('morgan');
+const Auth       = require('./modules/Auth');
 
 const http = require('http').Server(app);
 const io   = require('socket.io')(http);
@@ -10,20 +10,12 @@ const io   = require('socket.io')(http);
 app.use(bodyParser.json());
 app.use(morgan('combined'));
 
+const auth = new Auth();
+
 app.get(
     '/', function (req, res)
     {
-        let provider = new mongoProvider();
-
-        provider.getUser(
-            {
-                one: 2
-            },
-            (r)=>
-            {
-                res.json(r);
-            }
-        );
+        
     }
 );
 
@@ -34,7 +26,7 @@ io.on(
             'today', function (msg)
             {
                 console.log(`got: today`);
-
+                
                 socket.emit(
                     'today',
                     [
@@ -43,6 +35,23 @@ io.on(
                             translate: 'необходимый'
                         }
                     ]
+                );
+            }
+        );
+        
+        
+        socket.on(
+            'signin', function (user_data)
+            {
+                auth.sign(
+                    user_data,
+                    (r) =>
+                    {
+                        socket.emit(
+                            'signed',
+                            r
+                        );
+                    }
                 );
             }
         );

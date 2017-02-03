@@ -16,7 +16,7 @@ const socket = angular.module('socket', []);
 socket.factory(
     'io', function ()
     {
-        return io();
+        return io.connect();
     }
 );
 

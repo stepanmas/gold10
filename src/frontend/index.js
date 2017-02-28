@@ -10,6 +10,7 @@ import 'style/global.less';
 import Remember from 'remember';
 import Auth from 'auth';
 import Navbar from 'navbar';
+import Add from 'add';
 import 'factorys';
 
 const app = angular.module('app', ['socket', 'getUserData', uiRouter]);
@@ -46,7 +47,7 @@ app.config(
                     'add', {
                         url        : '/add',
                         templateUrl: "add/form.html",
-                        controller : ['$scope', '$location', 'io', 'getUserData', Navbar, Auth],
+                        controller : ['$scope', '$rootScope', '$http', '$location', 'io', 'getUserData', Add],
                         isAuth: function ()
                         {
                             return (localStorage.getItem('username') && localStorage.getItem('key'));

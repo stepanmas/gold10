@@ -4,5 +4,5 @@ Learn 20 worlds every day
 ####Run
 
     npm run serve
+    npm run mongoserve
     npm run apiserve
-    npm run mongoserve // use default port

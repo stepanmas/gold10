@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h4>Add new a phrase or a sentence</h4>
+
+            <form>
+                <div class="form-group">
+                    <label for="phrase">Phrase</label>
+                    <input autocomplete="off" ng-model="phrase" ng-keyup="getTranslate()" type="text" class="form-control" id="phrase" placeholder="Phrase">
+                </div>
+                <ol>
+                    <li ng-repeat="word in translated">{{word}}</li>
+                </ol>
+            </form>
+        </div>
+    </div>
+</div>

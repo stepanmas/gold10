@@ -24,13 +24,14 @@ class Add {
         this.$location = $location;
         this.$http     = $http;
         
-        this.bind();
+        this.bind.bind(this)();
         this.$scope = $scope;
         
         socket.emit('today', getPrivateData());
         
-        $scope.getTranslate = this.getTranslate.bind(this);
-        $scope.translated   = '';
+        $scope.getTranslate     = this.getTranslate.bind(this);
+        $scope.translated       = [];
+        $scope.lingualeo_source = {};
     }
     
     /*
@@ -75,18 +76,8 @@ class Add {
         );
     }
     
-    /*
-     key=<API-ключ>
-     & text=<переводимый текст>
-     & lang=<направление перевода>
-     & [format=<формат текста>]
-     & [options=<опции перевода>]
-     & [callback=<имя callback-функции>]
-     */
-    _translate(lang)
+    _yandex(lang, toLang)
     {
-        let toLang = lang === 'ru' ? 'en' : 'ru';
-        
         this.$http(
             {
                 url   : this.params.url.yandex.translate,
@@ -101,15 +92,25 @@ class Add {
         ).then(
             res =>
             {
-                //console.log(res.data);
-                this.$scope.translated = res.data.text;
+                for (let word of res.data.text)
+                {
+                    this.$scope.translated.push(
+                        {
+                            type: 'Yandex',
+                            text: word
+                        }
+                    );
+                }
             },
             res =>
             {
                 throw new Error(res.data.code + ' ' + res.data.message);
             }
         );
-        
+    }
+    
+    _multillect(lang, toLang)
+    {
         this.$http(
             {
                 url   : this.params.url.multillect.translate,
@@ -125,34 +126,33 @@ class Add {
         ).then(
             res =>
             {
-                console.log(res.data);
-                //this.$scope.translated = res.data.text;
+                this.$scope.translated.push(
+                    {
+                        type: 'Multillect',
+                        text: res.data.result.translated
+                    }
+                );
             },
             res =>
             {
                 throw new Error(res.data.code + ' ' + res.data.message);
             }
         );
+    }
     
-        this.$http(
-            {
-                url   : this.params.url.lingualeo.translate,
-                method: "GET",
-                params: {
-                    word: this.$scope.phrase
-                }
-            }
-        ).then(
-            res =>
-            {
-                console.log(res.data);
-                //this.$scope.translated = res.data.text;
-            },
-            res =>
-            {
-                throw new Error(res.data.code + ' ' + res.data.message);
-            }
-        );
+    _lingualeo(lang, toLang)
+    {
+        this.io.emit('translate', this.$scope.phrase);
+    }
+    
+    _translate(lang)
+    {
+        let toLang = lang === 'ru' ? 'en' : 'ru';
+        
+        this.$scope.translated = [];
+        this._yandex(lang, toLang);
+        this._multillect(lang, toLang);
+        this._lingualeo(lang, toLang);
     }
     
     getTranslate()
@@ -162,7 +162,36 @@ class Add {
     
     bind()
     {
-        
+        this.io.on(
+            'translated',
+            r =>
+            {
+                r = JSON.parse(r);
+                
+                if (r.error_msg)
+                {
+                    console.error(r.error_msg);
+                    return;
+                }
+                
+                for (let version of r.translate)
+                {
+                    this.$scope.translated.push(
+                        {
+                            type   : 'Lingualeo',
+                            text   : version.value,
+                            pic_url: version.pic_url,
+                            rating : version.votes
+                        }
+                    );
+                }
+                
+                this.$scope.lingualeo_source = r;
+                this.$scope.$digest();
+                
+                console.log(r);
+            }
+        );
     }
 }
 

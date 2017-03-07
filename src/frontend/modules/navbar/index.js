@@ -4,7 +4,7 @@ class Navbar {
     constructor($scope, $rootScope)
     {
         this.$scope = $scope;
-        $scope.name    = 'Gold20';
+        $scope.name    = 'Gold10';
         $scope.curPage = 'Remember';
         
         $scope.links = [

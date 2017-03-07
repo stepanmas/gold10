@@ -8,8 +8,16 @@
                     <label for="phrase">Phrase</label>
                     <input autocomplete="off" ng-model="phrase" ng-keyup="getTranslate()" type="text" class="form-control" id="phrase" placeholder="Phrase">
                 </div>
-                <ol>
-                    <li ng-repeat="word in translated">{{word}}</li>
+                <ol class="translated list-unstyled">
+                    <li ng-repeat="word in translated" class="clearfix">
+                        <img ng-if="word.pic_url" src="{{word.pic_url}}" alt=""/>
+
+                        <h6 class="pull-left">{{word.text}}</h6>
+                        <div class="pull-right">
+                            {{word.type}}<br />
+                            <small>{{word.rating}}</small>
+                        </div>
+                    </li>
                 </ol>
             </form>
         </div>

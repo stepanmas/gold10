@@ -8,8 +8,9 @@ const Auth     = require('./modules/Auth');
 const Remember = require('./modules/Remember');
 
 // server
-const http = require('http').Server(app);
-const io   = require('socket.io')(http);
+const http    = require('http').Server(app);
+const io      = require('socket.io')(http);
+const request = require('request');
 
 app.use(bodyParser.json());
 app.use(morgan('combined'));
@@ -66,6 +67,36 @@ io.on(
                         socket.emit(
                             'signed',
                             r
+                        );
+                    }
+                );
+            }
+        );
+        
+        socket.on(
+            'translate', function (word)
+            {
+                request(
+                    {
+                        url: 'https://api.lingualeo.com/gettranslates',
+                        qs: {
+                            word          : word.replace(/&/g, "%26"),
+                            include_media : 1,
+                            add_word_forms: 1
+                        }
+                    }
+                ).on(
+                    'response',
+                    res =>
+                    {
+                        res.on(
+                            'data', function (data)
+                            {
+                                socket.emit(
+                                    'translated',
+                                    data.toString()
+                                );
+                            }
                         );
                     }
                 );

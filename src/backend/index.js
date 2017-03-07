@@ -4,19 +4,20 @@ const bodyParser = require('body-parser');
 const morgan     = require('morgan');
 
 // modules
-const Auth     = require('./modules/Auth');
-const Remember = require('./modules/Remember');
+const Auth      = require('./modules/Auth');
+const Remember  = require('./modules/Remember');
+const Translate = require('./modules/Translate');
 
 // server
-const http    = require('http').Server(app);
-const io      = require('socket.io')(http);
-const request = require('request');
+const http = require('http').Server(app);
+const io   = require('socket.io')(http);
 
 app.use(bodyParser.json());
 app.use(morgan('combined'));
 
-const auth     = new Auth();
-const remember = new Remember();
+const auth      = new Auth();
+const remember  = new Remember();
+const translate = new Translate();
 
 app.get(
     '/', function (req, res)
@@ -36,11 +37,14 @@ io.on(
                     (userData) =>
                     {
                         if (userData.error)
+                        {
                             socket.emit(
                                 'access error',
                                 userData
                             );
+                        }
                         else
+                        {
                             remember.list(
                                 userData, list =>
                                 {
@@ -50,6 +54,7 @@ io.on(
                                     );
                                 }
                             );
+                        }
                         
                     }
                 );
@@ -76,30 +81,31 @@ io.on(
         socket.on(
             'translate', function (word)
             {
-                request(
-                    {
-                        url: 'https://api.lingualeo.com/gettranslates',
-                        qs: {
-                            word          : word.replace(/&/g, "%26"),
-                            include_media : 1,
-                            add_word_forms: 1
+                if (word.length > 1)
+                {
+                    translate.run(
+                        word,
+                        r =>
+                        {
+                            socket.emit(
+                                'translated',
+                                r
+                            );
                         }
-                    }
-                ).on(
-                    'response',
-                    res =>
-                    {
-                        res.on(
-                            'data', function (data)
-                            {
-                                socket.emit(
-                                    'translated',
-                                    data.toString()
-                                );
+                    );
+                }
+                else
+                {
+                    socket.emit(
+                        'translated',
+                        {
+                            error: {
+                                code   : 22,
+                                message: 'In the word must be contains least two letters'
                             }
-                        );
-                    }
-                );
+                        }
+                    );
+                }
             }
         );
     }

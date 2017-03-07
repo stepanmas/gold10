@@ -1,5 +1,5 @@
 {
-  "name": "gold20",
+  "name": "gold10",
   "version": "0.9.0",
   "description": "Learn 20 worlds every day",
   "main": "index.js",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/stepanmas/gold20.git"
+    "url": "git+ssh://git@github.com/stepanmas/gold10.git"
   },
   "keywords": [
     "learn",
@@ -26,9 +26,9 @@
   "author": "StepanMas",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/stepanmas/gold20/issues"
+    "url": "https://github.com/stepanmas/gold10/issues"
   },
-  "homepage": "https://github.com/stepanmas/gold20#readme",
+  "homepage": "https://github.com/stepanmas/gold10#readme",
   "dependencies": {
     "angular": "^1.6.1",
     "angular-ui-bootstrap": "^2.4.0",

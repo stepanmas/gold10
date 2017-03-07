@@ -6,12 +6,15 @@ class Add {
         this.params = {
             key    : 'trnsl.1.1.20170228T160740Z.b6fa93de752857b1.d430dece652de870e2faf5acbf79b12c731cbf01', // https://tech.yandex.ru/keys/?service=trnsl
             url    : {
-                yandex: {
+                yandex    : {
                     translate: 'https://translate.yandex.net/api/v1.5/tr.json/translate',
                     detect   : 'https://translate.yandex.net/api/v1.5/tr.json/detect'
                 },
-                lingualeo: {
+                lingualeo : {
                     translate: 'https://api.lingualeo.com/gettranslates'
+                },
+                multillect: {
+                    translate: 'https://api.multillect.com/translate/json/1.0/410/'
                 }
             },
             timeout: 1000
@@ -82,6 +85,8 @@ class Add {
      */
     _translate(lang)
     {
+        let toLang = lang === 'ru' ? 'en' : 'ru';
+        
         this.$http(
             {
                 url   : this.params.url.yandex.translate,
@@ -89,7 +94,7 @@ class Add {
                 params: {
                     key   : this.params.key,
                     text  : this.$scope.phrase,
-                    lang  : lang === 'ru' ? 'en' : 'ru',
+                    lang  : toLang,
                     format: 'html'
                 }
             }
@@ -104,8 +109,32 @@ class Add {
                 throw new Error(res.data.code + ' ' + res.data.message);
             }
         );
+        
+        this.$http(
+            {
+                url   : this.params.url.multillect.translate,
+                method: "GET",
+                params: {
+                    method: 'translate/api/translate',
+                    from  : lang,
+                    to    : toLang,
+                    text  : this.$scope.phrase,
+                    sig   : 'a45aec8270ac8e2d41ba191bd4f741b0'
+                }
+            }
+        ).then(
+            res =>
+            {
+                console.log(res.data);
+                //this.$scope.translated = res.data.text;
+            },
+            res =>
+            {
+                throw new Error(res.data.code + ' ' + res.data.message);
+            }
+        );
     
-        /*this.$http(
+        this.$http(
             {
                 url   : this.params.url.lingualeo.translate,
                 method: "GET",
@@ -123,7 +152,7 @@ class Add {
             {
                 throw new Error(res.data.code + ' ' + res.data.message);
             }
-        );*/
+        );
     }
     
     getTranslate()

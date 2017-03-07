@@ -1,5 +1,5 @@
-# gold20
-Learn 20 worlds every day
+# Gold 10
+Learn 10 worlds or phrases every day
 
 ####Run
 

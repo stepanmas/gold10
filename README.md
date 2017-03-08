@@ -6,3 +6,5 @@ Learn 10 worlds or phrases every day
     npm run serve
     npm run mongoserve
     npm run apiserve
+    or just
+    ./run

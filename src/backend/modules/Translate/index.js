@@ -1,4 +1,5 @@
 const request = require('request');
+const concat  = require('concat-stream');
 
 module.exports = class {
     constructor()
@@ -107,25 +108,21 @@ module.exports = class {
         ).then(
             r =>
             {
-                let result = [];
+                let promises = [];
                 
-                for (let arr of r)
+                for (let res of r)
                 {
-                    result.push(arr.on('data'));
+                    promises.push(
+                        new Promise(
+                            resolve => res.on('data', data => { resolve(data.toString()) })
+                        )
+                    );
                 }
-                
-                return Promise.all(result);
+    
+                return Promise.all(promises);
             },
-            e =>
-            {
-                console.error(e);
-            }
-        ).then(
-            r=>
-            {
-                console.log(r);
-            }
-        );
+            cb
+        ).then(cb);
     }
     
     run(word, cb)
@@ -139,10 +136,7 @@ module.exports = class {
                 {
                     this._translate(
                         res.lang,
-                        r =>
-                        {
-                            cb(r);
-                        }
+                        cb
                     );
                 }
             }

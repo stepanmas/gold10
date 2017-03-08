@@ -83,6 +83,7 @@ io.on(
             {
                 if (word.length > 1)
                 {
+                    console.log(word);
                     translate.run(
                         word,
                         r =>

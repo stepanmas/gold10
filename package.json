@@ -43,6 +43,7 @@
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
     "copy-webpack-plugin": "^4.0.1",
+    "concat-stream": "^1.6.0",
     "css": "^2.2.1",
     "css-loader": "^0.26.1",
     "file": "^0.2.2",

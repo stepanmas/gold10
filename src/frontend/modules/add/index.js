@@ -40,19 +40,18 @@ class Add {
             'translated',
             r =>
             {
-                r = JSON.parse(r);
-                
-                if (r.error_msg)
+                if (!r || r.length < 3)
                 {
-                    console.error(r.error_msg);
+                    console.error(r);
                     return;
                 }
                 
-                // code
+                for (let result of r)
+                {
+                    console.log(JSON.parse(result));
+                }
                 
                 this.$scope.$digest();
-                
-                console.log(r);
             }
         );
     }

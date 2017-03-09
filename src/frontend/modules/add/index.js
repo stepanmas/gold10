@@ -4,7 +4,7 @@ class Add {
     constructor($scope, $rootScope, $http, $location, socket, getPrivateData)
     {
         this.params = {
-            keyup_delay: 2000
+            keyup_delay: 1000
         };
         
         this.io        = socket;
@@ -18,15 +18,20 @@ class Add {
         
         $scope.getTranslate     = this.getTranslate.bind(this);
         $scope.translated       = [];
-        $scope.lingualeo_source = {};
+        $scope.lingualeo_source = null;
+        $scope.loader           = false;
     }
     
     getTranslate()
     {
-        if(this._keyup_timer) clearTimeout(this._keyup_timer);
-    
+        if (this._keyup_timer) clearTimeout(this._keyup_timer);
+        
         this._keyup_timer = setTimeout(
-            () => {
+            () =>
+            {
+                this.$scope.loader = true;
+                this.$scope.$digest();
+                
                 if (this.$scope.phrase.length > 1)
                     this.io.emit('translate', this.$scope.phrase);
             },
@@ -40,17 +45,26 @@ class Add {
             'translated',
             r =>
             {
+                this.$scope.loader = false;
+                
                 if (!r || r.length < 3)
                 {
                     console.error(r);
                     return;
                 }
                 
-                for (let result of r)
+                for (let option of r)
                 {
-                    console.log(JSON.parse(result));
+                    if (option.transcription)
+                    {
+                        this.$scope.lingualeo_source = option;
+                        break;
+                    }
                 }
                 
+                console.log(r);
+                
+                this.$scope.translated = r;
                 this.$scope.$digest();
             }
         );

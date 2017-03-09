@@ -97,32 +97,24 @@ module.exports = class {
     
     _translate(lang, cb)
     {
-        let toLang = lang === 'ru' ? 'en' : 'ru';
+        let toLang   = lang === 'ru' ? 'en' : 'ru';
+        let promises = [];
+        let requests = [
+            this._yandex(lang, toLang),
+            this._multillect(lang, toLang),
+            this._lingualeo(lang, toLang)
+        ];
         
-        return Promise.all(
-            [
-                this._yandex(lang, toLang),
-                this._multillect(lang, toLang),
-                this._lingualeo(lang, toLang)
-            ]
-        ).then(
-            r =>
-            {
-                let promises = [];
-                
-                for (let res of r)
-                {
-                    promises.push(
-                        new Promise(
-                            resolve => res.on('data', data => { resolve(data.toString()) })
-                        )
-                    );
-                }
-    
-                return Promise.all(promises);
-            },
-            cb
-        ).then(cb);
+        for (let res of requests)
+        {
+            promises.push(
+                new Promise(
+                    resolve => res.on('data', data => resolve(JSON.parse(data)))
+                )
+            );
+        }
+        
+        return Promise.all(promises).then(cb);
     }
     
     run(word, cb)

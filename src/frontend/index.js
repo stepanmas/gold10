@@ -5,6 +5,7 @@ import uiRouter from 'angular-ui-router';
 
 // Other
 import 'style/global.less';
+import 'font-awesome-webpack';
 
 // Application
 import Remember from 'remember';

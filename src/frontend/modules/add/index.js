@@ -20,6 +20,10 @@ class Add {
         $scope.translated       = [];
         $scope.lingualeo_source = null;
         $scope.loader           = false;
+        $scope.save             = $event =>
+        {
+            this.save.bind(this)($event.currentTarget);
+        };
     }
     
     getTranslate()
@@ -68,6 +72,32 @@ class Add {
                 this.$scope.$digest();
             }
         );
+    }
+    
+    normalizeData(result, data)
+    {
+        let res = null;
+        let ll  = this.$scope.lingualeo_source;
+        
+        data = JSON.parse(data);
+        
+        res = {
+            original     : this.$scope.phrase,
+            transcription: data.transcription || ll.transcription,
+            translate    : result,
+            example      : this.$scope.example,
+            sound        : data.sound_url || ll.sound_url,
+            imagine      : data.pic_url || ll.pic_url
+        };
+        
+        return res;
+    }
+    
+    save(element)
+    {
+        let data = this.normalizeData(element.dataset.result, element.dataset.source);
+    
+        this.io.emit('add_word', data);
     }
 }
 

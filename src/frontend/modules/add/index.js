@@ -21,7 +21,7 @@ class Add {
         $scope.loader           = false;
         $scope.save             = $event =>
         {
-            this.save.bind(this)($event.currentTarget);
+            this.save($event);
         };
     }
     
@@ -71,6 +71,11 @@ class Add {
                 this.$scope.$digest();
             }
         );
+        
+        this.io.on(
+            'added_word',
+            console.log
+        );
     }
     
     normalizeData(result, data)
@@ -92,9 +97,11 @@ class Add {
         return res;
     }
     
-    save(element)
+    save(e)
     {
-        let data = this.normalizeData(element.dataset.result, element.dataset.source);
+        if (e.target.nodeName === 'INPUT') return;
+        
+        let data = this.normalizeData(e.currentTarget.dataset.result, e.currentTarget.dataset.source);
         
         this.io.emit('add_word', data, this.getPrivateData());
     }

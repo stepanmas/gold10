@@ -12,7 +12,7 @@
 
                 <i ng-if="loader" class="fa fa-refresh fa-spin fa-3x fa-fw margin-bottom"></i>
 
-                <div ng-if="lingualeo_source" class="lingualeo_approach" ng-click="save($event)" data-source="{{lingualeo_source | json}}">
+                <div ng-if="lingualeo_source" class="lingualeo_approach" ng-click="save($event)" data-source='{{lingualeo_source | json}}' data-result="{{lingualeo_source.translate[0].value}}">
                     <table width="100%">
                         <tr>
                             <td>
@@ -37,23 +37,22 @@
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <input class="form-control m-t-sm" ng-model="example"
-                                       placeholder="A sentence where this word/phrase is used" type="text" name=""/>
+                                <input class="form-control m-t-sm" ng-model="$parent.example" placeholder="A sentence where this word/phrase is used" type="text" name=""/>
                             </td>
                         </tr>
                     </table>
                 </div>
 
                 <ol ng-repeat="option in translated" class="translated list-unstyled">
-                    <li ng-click="save($event)" ng-if="option.text" ng-repeat="text in option.text" data-source="{{option | json}}" data-result="{{text}}">
+                    <li ng-click="save($event)" ng-if="option.text" ng-repeat="text in option.text" data-source='{{option | json}}' data-result="{{text}}">
                         {{text}} <small class="pull-right">Yandex</small>
                     </li>
 
-                    <li ng-click="save($event)" ng-if="option.result" data-source="{{option | json}}" data-result="{{option.result.translated}}">
+                    <li ng-click="save($event)" ng-if="option.result" data-source='{{option | json}}' data-result="{{option.result.translated}}">
                         {{option.result.translated}} <small class="pull-right">Multillect</small>
                     </li>
 
-                    <li ng-click="save($event)" ng-if="option.translate" ng-repeat="variant in option.translate" data-source="{{option | json}}" data-result="{{variant.value}}">
+                    <li ng-click="save($event)" ng-if="option.translate" ng-repeat="variant in option.translate" data-source='{{option | json}}' data-result="{{variant.value}}">
                         <img ng-if="variant.pic_url" src="{{variant.pic_url}}" alt=""/>
 
                         {{variant.value}}

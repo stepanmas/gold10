@@ -26,19 +26,21 @@ module.exports = class {
                     {
                         assert.equal(null, err);
                         
+                        let condition = [
+                            {learned: ago(-1)},
+                            {learned: ago(-3)},
+                            {learned: ago(-7)},
+                            {learned: ago(-14)},
+                            {learned: ago(-30)}
+                        ];
+                        
                         collection
                             .find(
                                 {
                                     author: userData._id,
                                     $and  : [
                                         {
-                                            $or: [
-                                                {learned: ago(-1)},
-                                                {learned: ago(-3)},
-                                                {learned: ago(-7)},
-                                                {learned: ago(-14)},
-                                                {learned: ago(-30)}
-                                            ]
+                                            $or: condition
                                         },
                                     ]
                                 }
@@ -49,7 +51,7 @@ module.exports = class {
                                     added  : -1
                                 }
                             )
-                            .limit(10)
+                            .limit(condition.length * 10)
                             .toArray(
                                 function (err, words)
                                 {

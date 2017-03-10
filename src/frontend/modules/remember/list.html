@@ -1,13 +1,30 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <ul class="list-group">
+            <ul ng-if="!started" class="list-group">
                 <li ng-repeat="item in today" class="list-group-item">{{item.original}} &mdash; {{item.translate}}</li>
             </ul>
 
-            <hr>
+            <ul class="word-cell list-unstyled" ng-if="started">
+                <li ng-repeat="word in today" ng-class="{'hide': !$first}">
+                    <div ng-if="word.imagine" class="image-box">
+                        <img src="{{word.imagine}}" alt=""/>
+                    </div>
 
-            <button class="btn btn-success btn-block">Start learn</button>
+                    <h4 ng-if="!timeLeft">{{randomWord(word.original, word.translate)}}</h4>
+                    <h4 ng-if="timeLeft">{{word.original}} &mdash; {{word.translate}}</h4>
+
+                    <small ng-if="timeLeft" class="text-muted">{{word.transcription}}</small>
+
+                    <audio src="{{word.sound}}"></audio>
+
+                    <i>{{timeout_counter}} sec left</i>
+
+                    <sup class="text-danger">{{word.forgot.length ? word.forgot : ''}}</sup>
+                </li>
+            </ul>
+
+            <button ng-if="!started" ng-click="start()" class="btn btn-success btn-block">Start remember</button>
         </div>
     </div>
 </div>

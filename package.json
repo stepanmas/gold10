@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/stepanmas/gold10#readme",
   "dependencies": {
+    "@cgross/angular-notify": "^2.5.1",
     "angular": "^1.6.1",
     "angular-ui-bootstrap": "^2.4.0",
     "angular-ui-router": "^0.4.2",

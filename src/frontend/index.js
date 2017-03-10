@@ -3,6 +3,10 @@ import angular from 'angular';
 import 'bootstrap/dist/css/bootstrap.css';
 import uiRouter from 'angular-ui-router';
 
+// Notifer
+import '@cgross/angular-notify/dist';
+import '@cgross/angular-notify/dist/angular-notify.css';
+
 // Other
 import 'style/global.less';
 import 'font-awesome-webpack';
@@ -14,7 +18,7 @@ import Navbar from 'navbar';
 import Add from 'add';
 import 'factorys';
 
-const app = angular.module('app', ['socket', 'getUserData', uiRouter]);
+const app = angular.module('app', ['socket', 'getUserData', 'cgNotify', uiRouter]);
 
 app
     .controller('navbar', ['$scope', '$rootScope', Navbar]);
@@ -48,7 +52,7 @@ app.config(
                     'add', {
                         url        : '/add',
                         templateUrl: "add/form.html",
-                        controller : ['$scope', '$rootScope', '$http', '$location', 'io', 'getUserData', Add],
+                        controller : ['$scope', '$rootScope', 'notify', '$http', '$location', 'io', 'getUserData', Add],
                         isAuth: function ()
                         {
                             return (localStorage.getItem('username') && localStorage.getItem('key'));

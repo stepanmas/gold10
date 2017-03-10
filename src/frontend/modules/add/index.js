@@ -1,7 +1,7 @@
 "use strict";
 
 class Add {
-    constructor($scope, $rootScope, $http, $location, socket, getPrivateData)
+    constructor($scope, $rootScope, notify, $http, $location, socket, getPrivateData)
     {
         this.params = {
             keyup_delay: 1000
@@ -11,6 +11,7 @@ class Add {
         this.$location      = $location;
         this.$http          = $http;
         this.getPrivateData = getPrivateData;
+        this.notify         = notify;
         
         this.bind.bind(this)();
         this.$scope = $scope;
@@ -74,7 +75,13 @@ class Add {
         
         this.io.on(
             'added_word',
-            console.log
+            r =>
+            {
+                this.$scope.translated       = [];
+                this.$scope.lingualeo_source = null;
+                this.$scope.$digest();
+                this.notify(r.result);
+            }
         );
     }
     

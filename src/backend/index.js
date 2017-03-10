@@ -7,6 +7,7 @@ const morgan     = require('morgan');
 const Auth      = require('./modules/Auth');
 const Remember  = require('./modules/Remember');
 const Translate = require('./modules/Translate');
+const AddWord   = require('./modules/AddWord');
 
 // server
 const http = require('http').Server(app);
@@ -106,6 +107,31 @@ io.on(
                         }
                     );
                 }
+            }
+        );
+        
+        socket.on(
+            'add_word', function (data, privateData)
+            {
+                auth.access(
+                    privateData,
+                    userData =>
+                    {
+                        if (userData.error)
+                        {
+                            socket.emit(
+                                'access error',
+                                userData
+                            );
+                        }
+                        else
+                        {
+                            let AW = new AddWord(data, userData);
+    
+                            AW.save(r => socket.emit('added_word', r));
+                        }
+                    }
+                );
             }
         );
     }

@@ -1,5 +1,6 @@
 const MongoProvider   = require('../mongoProvider');
 const PasswordManager = require('./password');
+const assert = require('assert');
 
 module.exports = class {
     constructor()
@@ -17,12 +18,17 @@ module.exports = class {
                     {
                         if (err) throw err;
                         
-                        let user = collection.findOne(condition);
-                        
-                        if (user)
-                            cb(user);
-                        else
-                            cb({error: 'User not found'});
+                        collection.findOne(
+                            condition,
+                            (err, item) => {
+                                assert.equal(null, err);
+                                
+                                if (item)
+                                    cb(item);
+                                else
+                                    cb({error: 'User not found'});
+                            }
+                        );
                     }
                 );
             }
@@ -129,10 +135,7 @@ module.exports = class {
                 email: privateData.username,
                 key  : privateData.key
             },
-            user =>
-            {
-                cb(user);
-            }
+            cb
         );
     }
 };

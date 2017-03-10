@@ -7,14 +7,13 @@ class Add {
             keyup_delay: 1000
         };
         
-        this.io        = socket;
-        this.$location = $location;
-        this.$http     = $http;
+        this.io             = socket;
+        this.$location      = $location;
+        this.$http          = $http;
+        this.getPrivateData = getPrivateData;
         
         this.bind.bind(this)();
         this.$scope = $scope;
-        
-        socket.emit('today', getPrivateData());
         
         $scope.getTranslate     = this.getTranslate.bind(this);
         $scope.translated       = [];
@@ -96,8 +95,8 @@ class Add {
     save(element)
     {
         let data = this.normalizeData(element.dataset.result, element.dataset.source);
-    
-        this.io.emit('add_word', data);
+        
+        this.io.emit('add_word', data, this.getPrivateData());
     }
 }
 

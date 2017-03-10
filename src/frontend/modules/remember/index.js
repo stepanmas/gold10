@@ -17,6 +17,7 @@ class Remember {
         this.io.on(
             'today', (r) =>
             {
+                console.warn(r);
                 this.$scope.$apply(
                     () =>
                     {

@@ -6,7 +6,7 @@
             <form>
                 <div class="form-group">
                     <label for="phrase">Phrase</label>
-                    <input autocomplete="off" ng-model="phrase" ng-keyup="getTranslate()" type="text"
+                    <input autofocus autocomplete="off" ng-model="phrase" ng-keyup="getTranslate()" type="text"
                            class="form-control" id="phrase" placeholder="Phrase">
                 </div>
 
@@ -32,12 +32,12 @@
                             </td>
                             <td class="text-right">
                                 <audio id="sound" autoplay src="{{ lingualeo_source.sound_url }}"></audio>
-                                <i onclick="document.getElementById('sound').play()" class="fa fa-volume-up fa-3x" aria-hidden="true"></i>
+                                <i onclick="document.getElementById('sound').play()" class="fa fa-volume-up fa-3x prevent-save" aria-hidden="true"></i>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <input class="form-control m-t-sm" ng-model="$parent.example" placeholder="A sentence where this word/phrase is used" type="text" name=""/>
+                                <input class="form-control m-t-sm prevent-save" ng-model="$parent.example" placeholder="A sentence where this word/phrase is used" type="text" name=""/>
                             </td>
                         </tr>
                     </table>

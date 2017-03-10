@@ -66,8 +66,6 @@ class Add {
                     }
                 }
                 
-                console.log(r);
-                
                 this.$scope.translated = r;
                 this.$scope.$digest();
             }
@@ -77,6 +75,8 @@ class Add {
             'added_word',
             r =>
             {
+                this.$scope.phrase           = '';
+                this.$scope.example          = '';
                 this.$scope.translated       = [];
                 this.$scope.lingualeo_source = null;
                 this.$scope.$digest();
@@ -106,7 +106,7 @@ class Add {
     
     save(e)
     {
-        if (e.target.nodeName === 'INPUT') return;
+        if (e.target.classList.contains('prevent-save')) return;
         
         let data = this.normalizeData(e.currentTarget.dataset.result, e.currentTarget.dataset.source);
         

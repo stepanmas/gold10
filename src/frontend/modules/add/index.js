@@ -20,10 +20,17 @@ class Add {
         $scope.translated       = [];
         $scope.lingualeo_source = null;
         $scope.loader           = false;
+        $scope.url_params       = $location.search();
         $scope.save             = $event =>
         {
             this.save($event);
         };
+        
+        if ($scope.url_params.word)
+        {
+            $scope.phrase = $scope.url_params.word;
+            this.getTranslate();
+        }
     }
     
     getTranslate()

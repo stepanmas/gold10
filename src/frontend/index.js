@@ -50,7 +50,7 @@ app.config(
                 )
                 .state(
                     'add', {
-                        url        : '/add',
+                        url        : '/add?word',
                         templateUrl: "add/form.html",
                         controller : ['$scope', '$rootScope', 'notify', '$http', '$location', 'io', 'getUserData', Add],
                         isAuth: function ()

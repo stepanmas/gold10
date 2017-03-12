@@ -7,7 +7,7 @@
                 <div class="form-group">
                     <label for="phrase">Phrase</label>
                     <input autofocus autocomplete="off" ng-model="phrase" ng-keyup="getTranslate()" type="text"
-                           class="form-control" id="phrase" placeholder="Phrase">
+                           class="form-control" id="phrase" placeholder="Enter phrase here" value="{{url_params.word}}">
                 </div>
 
                 <i ng-if="loader" class="fa fa-refresh fa-spin fa-3x fa-fw margin-bottom"></i>

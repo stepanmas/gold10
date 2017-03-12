@@ -16,15 +16,16 @@ class MongoProvider {
                 !function ()
                 {
                     payload(db);
-    
-                    return Promise.reject();
-                }().then(() => {db.close()}).catch(
-                    (err) =>
-                    {
-                        if (err)
-                            console.log(err);
-                    }
-                );
+                    
+                    return Promise.reject(); //TODO: need to test resolve
+                }()
+                    .then(() => {db.close()}).catch(
+                        (err) =>
+                        {
+                            if (err)
+                                console.log(err);
+                        }
+                    );
             }
         );
     }

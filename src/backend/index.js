@@ -30,9 +30,13 @@ app.get(
 io.on(
     'connection', function (socket)
     {
+        console.log('connected');
+        
         socket.on(
             'today', function (privateData)
             {
+                console.log('today', privateData);
+                
                 auth.access(
                     privateData,
                     (userData) =>
@@ -66,6 +70,8 @@ io.on(
         socket.on(
             'signin', function (user_data)
             {
+                console.log('signin', user_data);
+                
                 auth.sign(
                     user_data,
                     (r) =>
@@ -82,6 +88,8 @@ io.on(
         socket.on(
             'translate', function (word)
             {
+                console.log('translate', word);
+                
                 if (word.length > 1)
                 {
                     translate.run(
@@ -113,7 +121,8 @@ io.on(
         socket.on(
             'add_word', function (data, privateData)
             {
-                console.log('add_word');
+                console.log('add_word', data, privateData);
+                
                 auth.access(
                     privateData,
                     userData =>

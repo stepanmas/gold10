@@ -34,7 +34,7 @@ app.config(
                     'list', {
                         url        : '/',
                         templateUrl: "remember/list.html",
-                        controller : ['$scope', '$location', 'io', 'getUserData', Remember],
+                        controller : ['$scope', '$location', '$timeout', 'notify', 'io', 'getUserData', Remember],
                         isAuth     : function ()
                         {
                             return (localStorage.getItem('username') && localStorage.getItem('key'));

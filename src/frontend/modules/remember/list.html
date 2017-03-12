@@ -6,25 +6,34 @@
             </ul>
 
             <ul class="word-cell list-unstyled" ng-if="started">
-                <li ng-repeat="word in today" ng-class="{'hide': !$first}">
+                <li ng-repeat="word in remembe">
                     <div ng-if="word.imagine" class="image-box">
                         <img src="{{word.imagine}}" alt=""/>
                     </div>
 
-                    <h4 ng-if="!timeLeft">{{randomWord(word.original, word.translate)}}</h4>
-                    <h4 ng-if="timeLeft">{{word.original}} &mdash; {{word.translate}}</h4>
+                    <h4 ng-if="!timeLeft">{{word.original}}</h4>
+                    <h4 ng-if="timeLeft">{{word.translate}}</h4>
 
                     <small ng-if="timeLeft" class="text-muted">{{word.transcription}}</small>
 
-                    <audio src="{{word.sound}}"></audio>
+                    <audio id="sound" src="{{word.sound}}"></audio>
 
-                    <i>{{timeout_counter}} sec left</i>
+                    <i ng-if="!timeLeft" counter="3">sec left</i>
+                    <div ng-if="timeLeft">
+                        <span onclick="document.getElementById('sound').play()"
+                              class="fa fa-volume-up fa-3x prevent-remember"></span>
+                    </div>
 
                     <sup class="text-danger">{{word.forgot.length ? word.forgot : ''}}</sup>
                 </li>
             </ul>
 
-            <button ng-if="!started" ng-click="start()" class="btn btn-success btn-block">Start remember</button>
+            <button ng-if="timeLeft" ng-click="start()" class="btn btn-success center-block">Continue</button>
+            <button ng-if="!started && remembe.length" ng-click="start()" class="btn btn-success btn-block">Start remember</button>
+
+            <div ng-if="!remembe.length" class="alert alert-danger">
+                <strong>You have one problem...</strong> nothing to remember!
+            </div>
         </div>
     </div>
 </div>

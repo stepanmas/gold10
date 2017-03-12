@@ -7,13 +7,3 @@ chrome.tabs.onUpdated.addListener(
         );
     }
 );
-
-chrome.runtime.onMessage.addListener(
-    function (r, data)
-    {
-        if (r.type === 'translate')
-        {
-            console.log(r.text);
-        }
-    }
-);

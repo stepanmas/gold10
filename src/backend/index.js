@@ -113,6 +113,7 @@ io.on(
         socket.on(
             'add_word', function (data, privateData)
             {
+                console.log('add_word');
                 auth.access(
                     privateData,
                     userData =>

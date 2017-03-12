@@ -1,0 +1,31 @@
+{
+    "manifest_version": 2,
+
+    "name": "Gold10",
+    "description": "Learn 10 worlds every day",
+    "version": "0.0.1",
+
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+
+    "browser_action": {
+        "default_title": "Save any word to your fave",
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+
+    "permissions": [
+        "contextMenus",
+        "tabs",
+        "activeTab",
+        "<all_urls>"
+    ],
+
+    "web_accessible_resources": [
+        "/editor.html",
+        "/foreground.js"
+    ]
+}

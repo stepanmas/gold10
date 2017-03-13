@@ -121,8 +121,6 @@ io.on(
         socket.on(
             'add_word', function (data, privateData)
             {
-                console.log('add_word', data, privateData);
-                
                 auth.access(
                     privateData,
                     userData =>
@@ -137,8 +135,40 @@ io.on(
                         else
                         {
                             let AW = new AddWord(data, userData);
-    
+                            
                             AW.save(r => socket.emit('added_word', r));
+                        }
+                    }
+                );
+            }
+        );
+        
+        
+        socket.on(
+            'forgot',
+            function (word, privateData)
+            {
+                auth.access(
+                    privateData,
+                    userData =>
+                    {
+                        if (userData.error)
+                        {
+                            socket.emit(
+                                'access error',
+                                userData
+                            );
+                        }
+                        else
+                        {
+                            remember.forgot(
+                                word, userData, () =>
+                                {
+                                    socket.emit(
+                                        'forgot_marked'
+                                    );
+                                }
+                            );
                         }
                     }
                 );

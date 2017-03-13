@@ -64,4 +64,40 @@ module.exports = class {
             }
         );
     }
+    
+    forgot(word, userData, cb)
+    {
+        console.log(word, userData, cb);
+        this.mongo.connect(
+            (db) =>
+            {
+                db.collection(
+                    'words',
+                    (err, collection) =>
+                    {
+                        assert.equal(null, err);
+                        
+                        collection
+                            .update(
+                                {
+                                    author  : userData._id,
+                                    original: word
+                                },
+                                {
+                                    $set : {
+                                        changed: Date.now(),
+                                        learned: null
+                                    },
+                                    $push: {
+                                        forgot: Date.now()
+                                    }
+                                }
+                            );
+                        
+                        cb();
+                    }
+                );
+            }
+        );
+    }
 };

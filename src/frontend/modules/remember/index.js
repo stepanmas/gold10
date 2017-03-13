@@ -6,6 +6,7 @@ class Remember {
         this.io        = socket;
         this.$location = $location;
         this.$timeout  = $timeout;
+        this.getPrivateData = getPrivateData;
         
         this.bind();
         this.$scope = $scope;
@@ -64,7 +65,7 @@ class Remember {
     {
         if (this.$scope.remembe.length)
         {
-            this.io.emit('forgot', this.$scope.remembe[0].original);
+            this.io.emit('forgot', this.$scope.remembe[0].original, this.getPrivateData());
         }
     }
     

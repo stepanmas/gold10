@@ -15,6 +15,7 @@ class Remember {
         $scope.current    = 0;
         $scope.remembe    = [];
         $scope.start      = this.start.bind(this);
+        $scope.ok         = this.ok.bind(this);
         $scope.randomWord = this.randomWord.bind(this);
         $scope.notify     = notify;
         
@@ -44,12 +45,27 @@ class Remember {
     
     randomWord(one, two)
     {
-        return Math.random() < .5 ? one : two;
+        return Math.random() < 0.5 ? one : two;
+    }
+    
+    ok(e)
+    {
+        if (angular.element(e.target).hasClass('prevent-remember') || this.$scope.timeLeft)
+        {
+            return false;
+        }
+        
+        this.$timeout.cancel(this._timer);
+        
+        this.start();
     }
     
     forgot()
     {
-        console.log('forgot');
+        if (this.$scope.remembe.length)
+        {
+            this.io.emit('forgot', this.$scope.remembe[0].original);
+        }
     }
     
     timeout()
@@ -59,7 +75,7 @@ class Remember {
             {
                 if (this.$scope.counter)
                 {
-                    this.timeout();
+                    this._timer = this.timeout();
                 }
                 else
                 {
@@ -83,7 +99,7 @@ class Remember {
             this.$scope.remember = [...this.$scope.today];
             return;
         }
-    
+        
         this.$scope.remembe = [this.$scope.remember.shift()];
         
         this.$scope.started  = true;

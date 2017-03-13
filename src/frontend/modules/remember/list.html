@@ -6,8 +6,8 @@
             </ul>
 
             <ul class="word-cell list-unstyled" ng-if="started">
-                <li ng-repeat="word in remembe">
-                    <div ng-if="word.imagine" class="image-box">
+                <li ng-repeat="word in remembe" ng-click="$parent.ok($event)">
+                    <div ng-if="word.imagine" class="image-box" ng-class="{'grease': !timeLeft}">
                         <img src="{{word.imagine}}" alt=""/>
                     </div>
 

@@ -13,6 +13,7 @@ import 'font-awesome-webpack';
 
 // Application
 import Remember from 'remember';
+import Learn from 'learn';
 import Auth from 'auth';
 import Navbar from 'navbar';
 import Add from 'add';
@@ -35,6 +36,17 @@ app.config(
                         url        : '/',
                         templateUrl: "remember/list.html",
                         controller : ['$scope', '$location', '$timeout', 'notify', 'io', 'getUserData', Remember],
+                        isAuth     : function ()
+                        {
+                            return (localStorage.getItem('username') && localStorage.getItem('key'));
+                        }
+                    }
+                )
+                .state(
+                    'learn', {
+                        url        : '/learn',
+                        templateUrl: "learn/list.html",
+                        controller : ['$scope', '$location', '$timeout', 'notify', 'io', 'getUserData', Learn],
                         isAuth     : function ()
                         {
                             return (localStorage.getItem('username') && localStorage.getItem('key'));

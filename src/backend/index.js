@@ -8,6 +8,7 @@ const Auth      = require('./modules/Auth');
 const Remember  = require('./modules/Remember');
 const Translate = require('./modules/Translate');
 const AddWord   = require('./modules/AddWord');
+const Learn     = require('./modules/Learn');
 
 // server
 const http = require('http').Server(app);
@@ -19,6 +20,7 @@ app.use(morgan('combined'));
 const auth      = new Auth();
 const remember  = new Remember();
 const translate = new Translate();
+const learn     = new Learn();
 
 app.get(
     '/', function (req, res)
@@ -66,6 +68,71 @@ io.on(
             }
         );
         
+        socket.on(
+            'learn', function (privateData)
+            {
+                auth.access(
+                    privateData,
+                    (userData) =>
+                    {
+                        if (userData.error)
+                        {
+                            socket.emit(
+                                'access error',
+                                userData
+                            );
+                        }
+                        else
+                        {
+                            learn.list(
+                                userData, list =>
+                                {
+                                    socket.emit(
+                                        'learn',
+                                        list
+                                    );
+                                }
+                            );
+                        }
+                        
+                    }
+                );
+            }
+        );
+        
+        socket.on(
+            'learned', function (word, privateData)
+            {
+                auth.access(
+                    privateData,
+                    (userData) =>
+                    {
+                        if (userData.error)
+                        {
+                            socket.emit(
+                                'access error',
+                                userData
+                            );
+                        }
+                        else
+                        {
+                            learn.mark(
+                                word,
+                                userData,
+                                r =>
+                                {
+                                    socket.emit(
+                                        'learned',
+                                        r
+                                    );
+                                }
+                            );
+                        }
+                        
+                    }
+                );
+            }
+        );
         
         socket.on(
             'signin', function (user_data)
@@ -142,7 +209,6 @@ io.on(
                 );
             }
         );
-        
         
         socket.on(
             'forgot',

@@ -8,8 +8,7 @@ class Remember {
         this.$timeout  = $timeout;
         
         this.bind();
-        this.$scope               = $scope;
-        this.timeout_for_remember = 3;
+        this.$scope = $scope;
         
         $scope.started    = false;
         $scope.timeLeft   = false;
@@ -31,8 +30,9 @@ class Remember {
                 
                 if (r.length)
                 {
-                    this.$scope.remembe.push(r[0]);
-                    this.$scope.$apply();
+                    this.$scope.remember = [...this.$scope.today];
+                    
+                    this.$scope.$digest();
                 }
                 else
                 {
@@ -52,23 +52,45 @@ class Remember {
         console.log('forgot');
     }
     
-    start()
+    timeout()
     {
-        this.$scope.started = true;
-    
-        this.$timeout(
-            () => {
-                
-                this.$scope.timeLeft -= 1;
-                
-                if (this.$scope.timeLeft)
+        return this.$timeout(
+            () =>
+            {
+                if (this.$scope.counter)
                 {
-                    
+                    this.timeout();
+                }
+                else
+                {
+                    this.$scope.timeLeft = true;
+                    this.forgot();
                 }
                 
+                this.$scope.counter -= 1;
+                this.$scope.$digest();
             },
             1000
         );
+    }
+    
+    start()
+    {
+        if (!this.$scope.remember.length)
+        {
+            this.$scope.started  = false;
+            this.$scope.timeLeft = false;
+            this.$scope.remember = [...this.$scope.today];
+            return;
+        }
+    
+        this.$scope.remembe = [this.$scope.remember.shift()];
+        
+        this.$scope.started  = true;
+        this.$scope.timeLeft = false;
+        this.$scope.counter  = 3;
+        
+        this._timer = this.timeout();
     }
 }
 

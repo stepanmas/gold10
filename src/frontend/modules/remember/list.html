@@ -18,7 +18,7 @@
 
                     <audio id="sound" src="{{word.sound}}"></audio>
 
-                    <i ng-if="!timeLeft" counter="3">sec left</i>
+                    <i ng-if="!timeLeft">{{counter}} sec left</i>
                     <div ng-if="timeLeft">
                         <span onclick="document.getElementById('sound').play()"
                               class="fa fa-volume-up fa-3x prevent-remember"></span>
@@ -29,9 +29,9 @@
             </ul>
 
             <button ng-if="timeLeft" ng-click="start()" class="btn btn-success center-block">Continue</button>
-            <button ng-if="!started && remembe.length" ng-click="start()" class="btn btn-success btn-block">Start remember</button>
+            <button ng-if="!started && remember.length" ng-click="start()" class="btn btn-success btn-block">Start remember</button>
 
-            <div ng-if="!remembe.length" class="alert alert-danger">
+            <div ng-if="!remember.length && !started" class="alert alert-danger">
                 <strong>You have one problem...</strong> nothing to remember!
             </div>
         </div>

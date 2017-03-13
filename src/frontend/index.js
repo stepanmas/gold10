@@ -2,6 +2,7 @@
 import angular from 'angular';
 import 'bootstrap/dist/css/bootstrap.css';
 import uiRouter from 'angular-ui-router';
+import collapse from 'angular-ui-bootstrap/src/collapse';
 
 // Notifer
 import '@cgross/angular-notify/dist';
@@ -19,7 +20,7 @@ import Navbar from 'navbar';
 import Add from 'add';
 import 'factorys';
 
-const app = angular.module('app', ['socket', 'getUserData', 'cgNotify', uiRouter]);
+const app = angular.module('app', ['socket', 'getUserData', 'cgNotify', collapse, uiRouter]);
 
 app
     .controller('navbar', ['$scope', '$rootScope', Navbar]);

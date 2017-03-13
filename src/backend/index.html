@@ -11,30 +11,35 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 <body>
-<nav ng-controller="navbar" class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <span class="navbar-brand">{{name}}</span>
+    <nav ng-controller="navbar" class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button ng-click="isCollapsed = !isCollapsed" type="button" class="navbar-toggle collapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand">{{name}}</span>
+            </div>
+
+            <div class="navbar-collapse collapse" uib-collapse="!isCollapsed">
+                <ul class="nav navbar-nav">
+                    <li ng-repeat="link in links" ng-class="{true: 'active'}[curPage === link.title]">
+                        <a ng-href="{{link.src}}">{{link.title}}</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a ng-class="{true: 'active'}[curPage === 'Auth']" ng-href="#!/auth">{{username}}</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
 
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li ng-repeat="link in links" ng-class="{true: 'active'}[curPage === link.title]">
-                    <a ng-href="{{link.src}}">{{link.title}}</a>
-                </li>
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a ng-class="{true: 'active'}[curPage === 'Auth']" ng-href="#!/auth">{{username}}</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<br/><br/><br/>
-<div class="ui-view"></div>
+    <div class="ui-view"></div>
 
 </body>
 </html>

@@ -3,7 +3,7 @@
 class Navbar {
     constructor($scope, $rootScope)
     {
-        this.$scope = $scope;
+        this.$scope    = $scope;
         $scope.name    = 'Gold10';
         $scope.curPage = 'Remember';
         
@@ -26,8 +26,8 @@ class Navbar {
             $scope.username = localStorage.getItem('username');
         else
             $scope.username = 'Sign in/up';
-    
-        $rootScope.setActive = this.setActive.bind(this);
+        
+        $rootScope.setActive   = this.setActive.bind(this);
         $rootScope.setUsername = this.setUsername.bind(this);
     }
     

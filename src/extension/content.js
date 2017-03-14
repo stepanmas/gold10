@@ -1,3 +1,8 @@
+function id(id)
+{
+    return document.getElementById(id);
+}
+
 document.forms.auth.onsubmit = function ()
 {
     if (document.forms.auth.email.value && document.forms.auth.password.value)
@@ -12,15 +17,15 @@ document.forms.auth.onsubmit = function ()
             {
                 if (!error && !error.error)
                 {
-                    document.getElementById('error').style.display = 'none';
-                    document.getElementById('site').style.display  = 'block';
+                    id('error').style.display = 'none';
+                    id('site').style.display  = 'block';
                     localStorage.setItem('gold10_key', user.key);
                     localStorage.setItem('gold10_email', user.email);
                 }
                 else
                 {
-                    document.getElementById('error').style.display = 'block';
-                    document.getElementById('error').textContent   = error.error;
+                    id('error').style.display = 'block';
+                    id('error').textContent   = error.error;
                 }
                 
             }
@@ -28,8 +33,8 @@ document.forms.auth.onsubmit = function ()
     }
     else
     {
-        document.getElementById('error').style.display = 'block';
-        document.getElementById('error').textContent   = 'Need to fill all fields';
+        id('error').style.display = 'block';
+        id('error').textContent   = 'Need to fill all fields';
     }
     
     return false;
@@ -37,11 +42,11 @@ document.forms.auth.onsubmit = function ()
 
 if (!localStorage.getItem('gold10_key'))
 {
-    document.getElementById('authBox').style.display = 'block';
-    document.getElementById('site').style.display    = 'none';
+    id('authBox').style.display = 'block';
+    id('site').style.display    = 'none';
 }
 else
 {
-    document.getElementById('authBox').style.display = 'none';
-    document.getElementById('site').style.display    = 'block';
+    id('authBox').style.display = 'none';
+    id('site').style.display    = 'block';
 }

@@ -3,12 +3,12 @@
     cursor        : default;
     right         : 0;
     top           : 0;
-    border-bottom : 1px solid #fafafa;
-    border-left   : 1px solid #fafafa;
+    border-bottom : 1px solid #efefef;
+    border-left   : 1px solid #efefef;
     background    : #fafafa;
     padding       : 5px 10px;
     color         : #555555;
-    z-index       : 777777;
+    z-index       : 2147483647;
 }
 
 #gold10_label span{

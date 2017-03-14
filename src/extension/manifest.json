@@ -7,6 +7,7 @@
 
     "background": {
         "scripts": [
+            "vendor/socket.io.min.js",
             "background.js"
         ]
     },
@@ -14,7 +15,7 @@
     "content_scripts": [
         {
             "matches": [ "https://gold10.stepanmas.com/" ],
-            "js": [ "vendor/socket.io.min.js", "context.js" ],
+            "js": [ "content.js" ],
             "all_frames": true,
             "run_at": "document_start"
         }

@@ -5,6 +5,27 @@ class Auth {
     }
 }
 
+chrome.runtime.sendMessage({type: 'authentication'});
+
+document.forms.auth.onsubmit = function ()
+{
+    
+    console.log(document.forms.auth.username.value);
+    return false;
+};
+
+if (!localStorage.getItem('gold10_key'))
+{
+    document.getElementById('authBox').style.display = 'block';
+    document.getElementById('site').style.display    = 'none';
+}
+else
+{
+    document.getElementById('authBox').style.display = 'none';
+    document.getElementById('site').style.display    = 'block';
+}
+
+
 chrome.runtime.onMessage.addListener(
     function (r, data)
     {
@@ -25,26 +46,3 @@ chrome.runtime.onMessage.addListener(
         }
     }
 );
-
-
-
-
-
-console.log(moment());
-document.forms.auth.onsubmit = function ()
-{
-    
-    console.log(document.forms.auth.username.value);
-    return false;
-};
-
-if (!localStorage.getItem('gold10_key'))
-{
-    document.getElementById('authBox').style.display = 'block';
-    document.getElementById('site').style.display    = 'none';
-}
-else
-{
-    document.getElementById('authBox').style.display = 'none';
-    document.getElementById('site').style.display    = 'block';
-}

@@ -23,7 +23,7 @@ import 'factorys';
 const app = angular.module('app', ['socket', 'getUserData', 'cgNotify', collapse, uiRouter]);
 
 app
-    .controller('navbar', ['$scope', '$rootScope', Navbar]);
+    .controller('navbar', ['$scope', '$rootScope', '$timeout', Navbar]);
 
 app.config(
     [
@@ -36,7 +36,7 @@ app.config(
                     'list', {
                         url        : '/',
                         templateUrl: "remember/list.html",
-                        controller : ['$scope', '$location', '$timeout', 'notify', 'io', 'getUserData', Remember],
+                        controller : ['$scope', '$rootScope', '$location', '$timeout', 'notify', 'io', 'getUserData', Remember],
                         isAuth     : function ()
                         {
                             return (localStorage.getItem('username') && localStorage.getItem('key'));

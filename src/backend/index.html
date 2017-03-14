@@ -32,8 +32,8 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a ng-class="{true: 'active'}[curPage === 'Auth']" ng-href="#!/auth">{{username}}</a>
+                    <li ng-class="{active: curPage === 'Auth'}">
+                        <a ng-href="#!/auth">{{username}}</a>
                     </li>
                 </ul>
             </div>

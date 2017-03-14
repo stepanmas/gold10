@@ -3,8 +3,6 @@
 class Auth {
     constructor($scope, $rootScope, $location, socket)
     {
-        $rootScope.setActive('Auth');
-        
         this.$scope = $scope;
         this.$rootScope = $rootScope;
         $scope.io   = socket;
@@ -52,6 +50,8 @@ class Auth {
                 this.$scope.$apply();
             }
         );
+    
+        $rootScope.setActive('Remember');
     }
     
     submit()

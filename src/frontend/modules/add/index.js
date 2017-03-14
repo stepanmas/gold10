@@ -31,6 +31,8 @@ class Add {
             $scope.phrase = $scope.url_params.word;
             this.getTranslate();
         }
+    
+        $rootScope.setActive('Add');
     }
     
     getTranslate()

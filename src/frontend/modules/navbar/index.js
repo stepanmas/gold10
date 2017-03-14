@@ -1,7 +1,7 @@
 "use strict";
 
 class Navbar {
-    constructor($scope, $rootScope)
+    constructor($scope, $rootScope, $timeout)
     {
         this.$scope    = $scope;
         $scope.name    = 'Gold10';
@@ -27,6 +27,7 @@ class Navbar {
         else
             $scope.username = 'Sign in/up';
         
+        this.$timeout          = $timeout;
         $rootScope.setActive   = this.setActive.bind(this);
         $rootScope.setUsername = this.setUsername.bind(this);
     }
@@ -34,6 +35,12 @@ class Navbar {
     setActive(name)
     {
         this.$scope.curPage = name;
+        this.$timeout(
+            () =>
+            {
+                this.$scope.$digest();
+            }
+        );
     }
     
     setUsername(name)

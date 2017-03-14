@@ -1,9 +1,8 @@
 "use strict";
 
 class Remember {
-    constructor($scope, $location, $timeout, notify, socket, getPrivateData)
+    constructor($scope, $rootScope, $location, $timeout, notify, socket, getPrivateData)
     {
-        console.log('Remember constructor');
         this.io        = socket;
         this.$location = $location;
         this.$timeout  = $timeout;
@@ -21,6 +20,7 @@ class Remember {
         $scope.notify     = notify;
         
         socket.emit('today', getPrivateData());
+        $rootScope.setActive('Remember');
     }
     
     bind()

@@ -8,7 +8,7 @@
             <ul class="word-cell list-unstyled" ng-if="started">
                 <li ng-repeat="word in remembe" ng-click="$parent.ok($event)">
                     <div ng-if="word.imagine" class="image-box" ng-class="{'grease': !timeLeft}">
-                        <img src="{{word.imagine}}" alt=""/>
+                        <img ng-src="{{word.imagine}}" alt=""/>
                     </div>
 
                     <h4 ng-if="!timeLeft">{{word.original}}</h4>
@@ -16,7 +16,7 @@
 
                     <small ng-if="timeLeft" class="text-muted">{{word.transcription}}</small>
 
-                    <audio id="sound" src="{{word.sound}}"></audio>
+                    <audio id="sound" ng-src="{{word.sound}}"></audio>
 
                     <i ng-if="!timeLeft">{{counter}} sec left</i>
                     <div ng-if="timeLeft">

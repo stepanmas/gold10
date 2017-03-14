@@ -1,13 +1,14 @@
 "use strict";
 
-class Remember {
-    constructor($scope, $location, $timeout, notify, socket, getPrivateData)
+class Learn {
+    constructor($scope, $rootScope, $location, $timeout, notify, socket, getPrivateData)
     {
         this.io             = socket;
         this.$location      = $location;
         this.$timeout       = $timeout;
         this.getPrivateData = getPrivateData;
-        
+    
+        $rootScope.setActive('Learn');
         this.bind();
         this.$scope = $scope;
         
@@ -23,6 +24,7 @@ class Remember {
     
     bind()
     {
+        this.io.off('learn');
         this.io.on(
             'learn', (r) =>
             {
@@ -62,4 +64,4 @@ class Remember {
     }
 }
 
-export default Remember;
+export default Learn;

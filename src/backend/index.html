@@ -26,8 +26,8 @@
 
             <div class="navbar-collapse collapse" uib-collapse="!isCollapsed">
                 <ul class="nav navbar-nav">
-                    <li ng-repeat="link in links" ng-class="{true: 'active'}[curPage === link.title]">
-                        <a ng-href="{{link.src}}">{{link.title}}</a>
+                    <li ng-repeat="link in links" ng-class="{active: $parent.curPage === link.title}">
+                        <a ng-click="$parent.isCollapsed = false" ng-href="{{link.src}}">{{link.title}}</a>
                     </li>
                 </ul>
 

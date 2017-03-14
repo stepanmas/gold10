@@ -8,7 +8,7 @@
             <ul class="word-cell list-unstyled" ng-if="started">
                 <li ng-repeat="word in item" ng-click="remember = true">
                     <div ng-if="word.imagine" class="image-box">
-                        <img src="{{word.imagine}}" alt=""/>
+                        <img ng-src="{{word.imagine}}" alt=""/>
                     </div>
 
                     <h5>{{word.original}}</h5>
@@ -16,7 +16,7 @@
 
                     <small class="text-muted">{{word.transcription}}</small>
 
-                    <audio id="sound" src="{{word.sound}}"></audio>
+                    <audio autoplay id="sound" ng-src="{{word.sound}}"></audio>
 
                     <div>
                         <span onclick="document.getElementById('sound').play()"
@@ -33,7 +33,9 @@
                 <button ng-click="start()" class="btn btn-success ">Continue</button>
             </div>
 
-            <button ng-if="!started && learn.length" ng-click="start()" class="btn btn-success btn-block">Start learn</button>
+            <button ng-if="!started && learn.length" ng-click="start()" class="btn btn-success btn-block">
+                Start learn
+            </button>
 
             <div ng-if="!learn.length && !started" class="alert alert-danger">
                 <strong>You have one problem...</strong> nothing to learn!

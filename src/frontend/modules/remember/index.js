@@ -3,6 +3,7 @@
 class Remember {
     constructor($scope, $location, $timeout, notify, socket, getPrivateData)
     {
+        console.log('Remember constructor');
         this.io        = socket;
         this.$location = $location;
         this.$timeout  = $timeout;
@@ -24,6 +25,7 @@ class Remember {
     
     bind()
     {
+        this.io.off('today');
         this.io.on(
             'today', (r) =>
             {

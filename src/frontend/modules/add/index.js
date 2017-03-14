@@ -52,6 +52,7 @@ class Add {
     
     bind()
     {
+        this.io.off('translated');
         this.io.on(
             'translated',
             r =>
@@ -77,7 +78,8 @@ class Add {
                 this.$scope.$digest();
             }
         );
-        
+    
+        this.io.off('added_word');
         this.io.on(
             'added_word',
             r =>

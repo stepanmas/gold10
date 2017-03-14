@@ -17,7 +17,7 @@
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <img ng-if="lingualeo_source.pic_url" src="{{lingualeo_source.pic_url}}" alt=""/>
+                                    <img ng-if="lingualeo_source.pic_url" ng-src="{{lingualeo_source.pic_url}}" alt=""/>
                                 </div>
                             </td>
                             <td width="90%">
@@ -31,7 +31,7 @@
                                 </div>
                             </td>
                             <td class="text-right">
-                                <audio id="sound" autoplay src="{{ lingualeo_source.sound_url }}"></audio>
+                                <audio id="sound" autoplay ng-src="{{ lingualeo_source.sound_url }}"></audio>
                                 <i onclick="document.getElementById('sound').play()" class="fa fa-volume-up fa-3x prevent-save" aria-hidden="true"></i>
                             </td>
                         </tr>
@@ -53,7 +53,7 @@
                     </li>
 
                     <li ng-click="save($event)" ng-if="option.translate" ng-repeat="variant in option.translate" data-source='{{option | json}}' data-result="{{variant.value}}">
-                        <img ng-if="variant.pic_url" src="{{variant.pic_url}}" alt=""/>
+                        <img ng-if="variant.pic_url" ng-src="{{variant.pic_url}}" alt=""/>
 
                         {{variant.value}}
 

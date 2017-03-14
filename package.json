@@ -4,7 +4,7 @@
   "description": "Learn 10 worlds every day",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf public/* && webpack -p",
+    "build": "rm -rf public/* && webpack && pm2 restart gold10",
     "clean": "rm -fr public/*",
     "status": "webpack --json --profile > stats.json",
     "serve": "webpack-dev-server --inline",

@@ -33,6 +33,8 @@
                 <button ng-click="start()" class="btn btn-success ">Continue</button>
             </div>
 
+            <div class="text-muted word-example" ng-if="started && item && item[0]">{{item[0].example}}</div>
+
             <button ng-if="!started && learn.length" ng-click="start()" class="btn btn-success btn-block">
                 Start learn
             </button>

@@ -1,9 +1,28 @@
-.gold10_label{
+#gold10_label{
     position      : fixed;
+    cursor        : default;
     right         : 0;
     top           : 0;
     border-bottom : 1px solid #fafafa;
     border-left   : 1px solid #fafafa;
-    background    : white;
-    padding       : 5px;
+    background    : #fafafa;
+    padding       : 5px 10px;
+    color         : #555555;
+    z-index       : 777777;
+}
+
+#gold10_label span{
+    display : block;
+}
+
+#gold10_label span + span{
+    display : none;
+}
+
+#gold10_label:hover span{
+    display : none;
+}
+
+#gold10_label:hover span + span{
+    display : block;
 }

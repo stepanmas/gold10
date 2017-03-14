@@ -2,12 +2,10 @@
 
 (function ()
 {
-    console.log('Run');
-    
-    class Html {
-        constructor()
+    class Core {
+        id(id)
         {
-            
+            return document.getElementById(id);
         }
         
         get(url, cb)
@@ -24,48 +22,127 @@
             };
         }
         
-        label(cb)
+        style(cb)
         {
             this.get(
-                '/html/label.html', html =>
+                '/styles.css', html =>
                 {
-                    let div = document.createElement('div');
-                    div.classList.add('gold10_label');
+                    let div       = document.createElement('style');
                     div.innerHTML = html;
                     cb(div);
                 }
             );
         }
         
-        tooltip(cb)
+        random(min, max)
         {
-            this.get(
-                '/html/tooltip.html', html =>
+            var argc = arguments.length;
+            if (argc === 0)
+            {
+                min = 0;
+                max = 2147483647;
+            }
+            else if (argc === 1)
+            {
+                throw new Error('Warning: mt_rand() expects exactly 2 parameters, 1 given')
+            }
+            else
+            {
+                min = parseInt(min, 10);
+                max = parseInt(max, 10);
+            }
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        
+        init()
+        {
+            this.style(
+                el =>
                 {
-                    let div = document.createElement('div');
-                    div.classList.add('gold10_tooltip');
-                    div.innerHTML = html;
-                    cb(div);
+                    document.body.appendChild(el);
                 }
             );
         }
     }
-    
-    let html   = new Html();
-    
-    chrome.extension.sendMessage(
-        {type: 'learn_list'},
-        list =>
+    class Label {
+        constructor(cb)
         {
-            console.log(list);
+            core.get(
+                '/html/label.html', html =>
+                {
+                    let div       = document.createElement('div');
+                    div.id        = 'gold10_label';
+                    div.innerHTML = html;
+                    this.el = div;
+                    cb(div);
+                }
+            );
+        }
+        
+        setNext()
+        {
+            let key = core.random(0, this.list.length - 1);
+            
+            this.el.querySelectorAll('span').forEach(
+                el =>
+                {
+                    el.textContent = this.list[key][el.dataset.key];
+                }
+            );
+            this.el.querySelectorAll('audio')[0].src = this.list[key].sound;
+        }
+    
+        timer()
+        {
+            this._timer = setInterval(
+                () =>
+                {
+                    this.setNext();
+                },
+                3000
+            );
+        }
+        
+        bind()
+        {
+            this.el.onmouseover = () =>
+            {
+                if (this._timer) clearInterval(this._timer);
+            };
+    
+            this.el.onmouseout = () =>
+            {
+                this.timer();
+            };
+    
+            this.el.onclick = () =>
+            {
+                this.el.querySelectorAll('audio')[0].play();
+            };
+        }
+        
+        init(list)
+        {
+            this.list = list;
+            this.setNext();
+            this.timer();
+            this.bind();
+        }
+    }
+    
+    let core = new Core();
+    let label = new Label(
+        el => {
+            document.body.appendChild(el);
         }
     );
     
+    chrome.extension.sendMessage(
+        {type: 'learn_list'},
+        list => {
     
-    html.label(
-        el =>
-        {
-            document.body.appendChild(el);
+            core.init(list);
+            label.init(list);
         }
     );
     

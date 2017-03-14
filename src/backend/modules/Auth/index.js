@@ -130,9 +130,7 @@ module.exports = class {
     
     access(privateData, cb)
     {
-        console.log(privateData);
-        
-        if (!privateData)
+        if (!privateData && !privateData.username && !privateData.key)
             return cb(
                 {
                     error: 'Incoming data of user is not correct'

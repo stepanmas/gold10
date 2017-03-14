@@ -60,26 +60,16 @@
     
     let html   = new Html();
     let server = new GoldServer();
-    let socket = io.connect(
-        'gold10.stepanmas.com', {
-            'path': '/socket.io'
-        }
-    );
     
-    socket.emit('learn');
-    socket.on(
-        'learn', l =>
-        {
-            console.log(l);
-        }
-    );
+    
+    chrome.runtime.sendMessage({type: 'authentication'});
     
     /*html.label(
-        el =>
-        {
-            document.body.appendChild(el);
-        }
-    );*/
+     el =>
+     {
+     document.body.appendChild(el);
+     }
+     );*/
     
     
     /* Events

@@ -14,7 +14,7 @@
     "content_scripts": [
         {
             "matches": [ "https://gold10.stepanmas.com/" ],
-            "js": [ "context.js" ],
+            "js": [ "vendor/socket.io.min.js", "context.js" ],
             "all_frames": true,
             "run_at": "document_start"
         }

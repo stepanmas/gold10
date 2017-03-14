@@ -130,6 +130,15 @@ module.exports = class {
     
     access(privateData, cb)
     {
+        console.log(privateData);
+        
+        if (!privateData)
+            return cb(
+                {
+                    error: 'Incoming data of user is not correct'
+                }
+            );
+        
         this.getUser(
             {
                 email: privateData.username,

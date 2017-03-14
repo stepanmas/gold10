@@ -1,0 +1,9 @@
+.gold10_label{
+    position      : fixed;
+    right         : 0;
+    top           : 0;
+    border-bottom : 1px solid #fafafa;
+    border-left   : 1px solid #fafafa;
+    background    : white;
+    padding       : 5px;
+}

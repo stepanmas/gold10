@@ -42,7 +42,7 @@
             this.get(
                 '/html/tooltip.html', html =>
                 {
-                    let div       = document.createElement('div');
+                    let div = document.createElement('div');
                     div.classList.add('gold10_tooltip');
                     div.innerHTML = html;
                     cb(div);
@@ -51,16 +51,35 @@
         }
     }
     
-    let html = new Html();
-    
-    html.label(
-        el =>
+    class GoldServer {
+        constructor()
         {
-            console.log('cb');
             
-            document.body.appendChild(el);
+        }
+    }
+    
+    let html   = new Html();
+    let server = new GoldServer();
+    let socket = io.connect(
+        'gold10.stepanmas.com', {
+            'path': '/socket.io'
         }
     );
+    
+    socket.emit('learn');
+    socket.on(
+        'learn', l =>
+        {
+            console.log(l);
+        }
+    );
+    
+    /*html.label(
+        el =>
+        {
+            document.body.appendChild(el);
+        }
+    );*/
     
     
     /* Events

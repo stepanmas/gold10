@@ -1,8 +1,9 @@
 "use strict";
 
 class Auth {
-    constructor($scope, $rootScope, $location, socket)
+    constructor($scope, $rootScope, $location, notify, socket)
     {
+        this.notify     = notify;
         this.$scope     = $scope;
         this.$rootScope = $rootScope;
         $scope.io       = socket;
@@ -17,7 +18,8 @@ class Auth {
         };
         
         this.$location = $location;
-        
+    
+        socket.off('signed');
         socket.on(
             'signed',
             (r) =>
@@ -39,12 +41,13 @@ class Auth {
                 this.signed(r);
             }
         );
-        
+    
+        socket.off('access error');
         socket.on(
             'access error',
             (error) =>
             {
-                console.log(error);
+                this.notify(error.error);
                 localStorage.removeItem('email');
                 localStorage.removeItem('key');
                 this.$location.path('/');

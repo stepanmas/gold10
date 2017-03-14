@@ -58,7 +58,7 @@ app.config(
                     'auth', {
                         url        : '/auth',
                         templateUrl: "auth/form.html",
-                        controller : ['$scope', '$rootScope', '$location', 'io', Auth]
+                        controller : ['$scope', '$rootScope', '$location', 'notify', 'io', Auth]
                     }
                 )
                 .state(

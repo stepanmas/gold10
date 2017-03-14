@@ -10,17 +10,16 @@ document.forms.auth.onsubmit = function ()
         chrome.extension.sendMessage(
             {
                 type    : 'auth',
-                email: document.forms.auth.email.value,
+                email   : document.forms.auth.email.value,
                 password: document.forms.auth.password.value
             },
             (user, error) =>
             {
-                if (!error && !error.error)
+                if (typeof user !== 'string')
                 {
+                    id('authBox').style.display = 'none';
                     id('error').style.display = 'none';
                     id('site').style.display  = 'block';
-                    localStorage.setItem('gold10_key', user.key);
-                    localStorage.setItem('gold10_email', user.email);
                 }
                 else
                 {

@@ -1,8 +1,20 @@
-const socket = io.connect(
-    'https://gold10.stepanmas.com', {
+self.params = {
+    server   : 'https://gold10.stepanmas.com',
+    io_params: {
         'path': '/socket.io'
     }
-);
+};
+
+function IO()
+{
+    if (!self.socket)
+        self.socket = io.connect(
+            self.params.server,
+            self.params.io_params
+        );
+    
+    return self.socket;
+}
 
 chrome.tabs.onUpdated.addListener(
     function (tabId, info)
@@ -27,13 +39,13 @@ chrome.extension.onMessage.addListener(
     {
         if (r.type === 'auth')
         {
-            socket.emit(
+            IO().emit(
                 'signin',
                 r
             );
-            
-            socket.off('signed');
-            socket.on(
+    
+            IO().off('signed');
+            IO().on(
                 'signed', user =>
                 {
                     localStorage.setItem('gold10_key', user.key);
@@ -54,14 +66,14 @@ chrome.extension.onMessage.addListener(
                 sendResponse(cache.list);
                 return true;
             }
-            
-            socket.emit(
+    
+            IO().emit(
                 'learn',
                 {key: localStorage.getItem('gold10_key'), email: localStorage.getItem('gold10_email')}
             );
-            
-            socket.off('learn');
-            socket.on(
+    
+            IO().off('learn');
+            IO().on(
                 'learn', l =>
                 {
                     localStorage.setItem(

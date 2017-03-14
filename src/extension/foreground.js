@@ -62,12 +62,12 @@
     );
     
     
-    /*html.label(
-     el =>
-     {
-     document.body.appendChild(el);
-     }
-     );*/
+    html.label(
+        el =>
+        {
+            document.body.appendChild(el);
+        }
+    );
     
     
     /* Events

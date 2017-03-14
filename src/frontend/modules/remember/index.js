@@ -13,7 +13,6 @@ class Remember {
         
         $scope.started    = false;
         $scope.timeLeft   = false;
-        $scope.current    = 0;
         $scope.remembe    = [];
         $scope.start      = this.start.bind(this);
         $scope.ok         = this.ok.bind(this);
@@ -28,6 +27,7 @@ class Remember {
         this.io.on(
             'today', (r) =>
             {
+                console.log('got today event');
                 this.$scope.today = r;
                 
                 if (r.length)

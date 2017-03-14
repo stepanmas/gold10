@@ -17,7 +17,7 @@ class MongoProvider {
                 {
                     payload(db);
                     
-                    return Promise.reject(); //TODO: need to test resolve
+                    return Promise.resolve();
                 }()
                     .then(() => {db.close()}).catch(
                         (err) =>

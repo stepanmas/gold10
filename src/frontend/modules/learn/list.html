@@ -6,13 +6,13 @@
             </ul>
 
             <ul class="word-cell list-unstyled" ng-if="started">
-                <li ng-repeat="word in item">
+                <li ng-repeat="word in item" ng-click="remember = true">
                     <div ng-if="word.imagine" class="image-box">
                         <img src="{{word.imagine}}" alt=""/>
                     </div>
 
                     <h5>{{word.original}}</h5>
-                    <h5>{{word.translate}}</h5>
+                    <h5 ng-class="remember || !word.learned ? '' : 'invisible'">{{word.translate}}</h5>
 
                     <small class="text-muted">{{word.transcription}}</small>
 
@@ -33,7 +33,7 @@
                 <button ng-click="start()" class="btn btn-success ">Continue</button>
             </div>
 
-            <button ng-if="!started" ng-click="start()" class="btn btn-success btn-block">Start learn</button>
+            <button ng-if="!started && learn.length" ng-click="start()" class="btn btn-success btn-block">Start learn</button>
 
             <div ng-if="!learn.length && !started" class="alert alert-danger">
                 <strong>You have one problem...</strong> nothing to learn!

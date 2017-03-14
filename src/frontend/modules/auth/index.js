@@ -3,9 +3,9 @@
 class Auth {
     constructor($scope, $rootScope, $location, socket)
     {
-        this.$scope = $scope;
+        this.$scope     = $scope;
         this.$rootScope = $rootScope;
-        $scope.io   = socket;
+        $scope.io       = socket;
         
         $scope.email    = null;
         $scope.password = null;
@@ -39,18 +39,19 @@ class Auth {
                 this.signed(r);
             }
         );
-    
+        
         socket.on(
             'access error',
-            (error) => {
+            (error) =>
+            {
                 console.log(error);
-                localStorage.removeItem('username');
+                localStorage.removeItem('email');
                 localStorage.removeItem('key');
                 this.$location.path('/');
                 this.$scope.$apply();
             }
         );
-    
+        
         $rootScope.setActive('Remember');
     }
     
@@ -67,9 +68,9 @@ class Auth {
     
     signed(r)
     {
-        localStorage.setItem('username', r.email);
+        localStorage.setItem('email', r.email);
         localStorage.setItem('key', r.key);
-        this.$rootScope.setUsername(r.email);
+        this.$rootScope.setEmail(r.email);
         this.$location.path('/');
         this.$scope.$apply();
     }

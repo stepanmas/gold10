@@ -51,18 +51,16 @@
         }
     }
     
-    class GoldServer {
-        constructor()
-        {
-            
-        }
-    }
-    
     let html   = new Html();
-    let server = new GoldServer();
     
+    chrome.extension.sendMessage(
+        {type: 'learn_list'},
+        list =>
+        {
+            console.log(list);
+        }
+    );
     
-    chrome.runtime.sendMessage({type: 'authentication'});
     
     /*html.label(
      el =>

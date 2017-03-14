@@ -39,7 +39,7 @@ app.config(
                         controller : ['$scope', '$rootScope', '$location', '$timeout', 'notify', 'io', 'getUserData', Remember],
                         isAuth     : function ()
                         {
-                            return (localStorage.getItem('username') && localStorage.getItem('key'));
+                            return (localStorage.getItem('email') && localStorage.getItem('key'));
                         }
                     }
                 )
@@ -50,7 +50,7 @@ app.config(
                         controller : ['$scope', '$rootScope', '$location', '$timeout', 'notify', 'io', 'getUserData', Learn],
                         isAuth     : function ()
                         {
-                            return (localStorage.getItem('username') && localStorage.getItem('key'));
+                            return (localStorage.getItem('email') && localStorage.getItem('key'));
                         }
                     }
                 )
@@ -68,7 +68,7 @@ app.config(
                         controller : ['$scope', '$rootScope', 'notify', '$http', '$location', 'io', 'getUserData', Add],
                         isAuth: function ()
                         {
-                            return (localStorage.getItem('username') && localStorage.getItem('key'));
+                            return (localStorage.getItem('email') && localStorage.getItem('key'));
                         }
                     }
                 )

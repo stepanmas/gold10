@@ -130,7 +130,7 @@ module.exports = class {
     
     access(privateData, cb)
     {
-        if (!privateData && !privateData.username && !privateData.key)
+        if (!privateData && !privateData.email && !privateData.key)
             return cb(
                 {
                     error: 'Incoming data of user is not correct'
@@ -139,7 +139,7 @@ module.exports = class {
         
         this.getUser(
             {
-                email: privateData.username,
+                email: privateData.email,
                 key  : privateData.key
             },
             cb

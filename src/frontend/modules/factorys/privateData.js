@@ -8,8 +8,8 @@ getPrivateData.factory(
         return function ()
         {
             return {
-                username: localStorage.getItem('username'),
-                key     : localStorage.getItem('key')
+                email: localStorage.getItem('email'),
+                key  : localStorage.getItem('key')
             };
         };
     }

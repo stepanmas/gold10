@@ -1,16 +1,37 @@
-class Auth {
-    constructor()
-    {
-        
-    }
-}
-
-chrome.runtime.sendMessage({type: 'authentication'});
-
 document.forms.auth.onsubmit = function ()
 {
+    if (document.forms.auth.email.value && document.forms.auth.password.value)
+    {
+        chrome.extension.sendMessage(
+            {
+                type    : 'auth',
+                email: document.forms.auth.email.value,
+                password: document.forms.auth.password.value
+            },
+            (user, error) =>
+            {
+                if (!error && !error.error)
+                {
+                    document.getElementById('error').style.display = 'none';
+                    document.getElementById('site').style.display  = 'block';
+                    localStorage.setItem('gold10_key', user.key);
+                    localStorage.setItem('gold10_email', user.email);
+                }
+                else
+                {
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('error').textContent   = error.error;
+                }
+                
+            }
+        );
+    }
+    else
+    {
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error').textContent   = 'Need to fill all fields';
+    }
     
-    console.log(document.forms.auth.username.value);
     return false;
 };
 
@@ -24,25 +45,3 @@ else
     document.getElementById('authBox').style.display = 'none';
     document.getElementById('site').style.display    = 'block';
 }
-
-
-chrome.runtime.onMessage.addListener(
-    function (r, data)
-    {
-        if (r.type === 'translate')
-        {
-            let newPage = 'https://gold10.stepanmas.com/#!/add?word=' + r.text;
-            let frame   = document.getElementById('site');
-            let f       = document.createElement('iframe');
-            
-            f.id           = "site";
-            f.style.width  = "800px";
-            f.style.height = "600px";
-            f.src          = newPage;
-            
-            frame.parentNode.removeChild(frame);
-            
-            document.body.appendChild(f);
-        }
-    }
-);

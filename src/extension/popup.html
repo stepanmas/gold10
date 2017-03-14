@@ -30,6 +30,10 @@
             padding       : 5px;
             border        : 1px solid #aaaaaa;
         }
+
+        #error{
+            color : red;
+        }
     </style>
 </head>
 <body>
@@ -37,15 +41,17 @@
         <form name="auth" action="">
             <label>Need authorization in the extension</label>
             <div>
-                <input placeholder="Username" type="text" name="username"/>
+                <input placeholder="E-mail" type="email" name="email"/>
             </div>
             <div>
                 <input placeholder="Password" type="password" name="password"/>
             </div>
+            <div id="error"></div>
             <button>Submit</button>
         </form>
     </div>
     <iframe style="display:none;" id="site" src="https://gold10.stepanmas.com/#!/add" width="800" height="600" align="left"></iframe>
+    <script src="vendor/socket.io.min.js"></script>
     <script src="content.js"></script>
 </body>
 </html>

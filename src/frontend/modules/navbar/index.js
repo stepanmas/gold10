@@ -22,14 +22,14 @@ class Navbar {
             }
         ];
         
-        if (localStorage.getItem('username'))
-            $scope.username = localStorage.getItem('username');
+        if (localStorage.getItem('email'))
+            $scope.email = localStorage.getItem('email');
         else
-            $scope.username = 'Sign in/up';
+            $scope.email = 'Sign in/up';
         
-        this.$timeout          = $timeout;
-        $rootScope.setActive   = this.setActive.bind(this);
-        $rootScope.setUsername = this.setUsername.bind(this);
+        this.$timeout        = $timeout;
+        $rootScope.setActive = this.setActive.bind(this);
+        $rootScope.setEmail  = this.setEmail.bind(this);
     }
     
     setActive(name)
@@ -43,9 +43,9 @@ class Navbar {
         );
     }
     
-    setUsername(name)
+    setEmail(name)
     {
-        this.$scope.username = name;
+        this.$scope.email = name;
     }
 }
 

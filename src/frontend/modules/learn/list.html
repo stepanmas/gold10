@@ -29,7 +29,7 @@
             </ul>
 
             <div ng-if="started" class="text-center">
-                <button ng-click="ok()" class="btn btn-default">Mark as learned</button>
+                <button ng-if="!item[0].learned" ng-click="ok()" class="btn btn-default">Mark as learned</button>
                 <button ng-click="start()" class="btn btn-success ">Continue</button>
             </div>
 

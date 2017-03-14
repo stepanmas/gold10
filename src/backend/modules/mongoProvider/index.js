@@ -17,13 +17,13 @@ class MongoProvider {
                 {
                     payload(db);
                     
-                    return Promise.resolve();
+                    return Promise.reject();
                 }()
                     .then(() => {db.close()}).catch(
                         (err) =>
                         {
                             if (err)
-                                console.log(err);
+                                console.log('ERROR: ', err);
                         }
                     );
             }

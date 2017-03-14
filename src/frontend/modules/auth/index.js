@@ -24,6 +24,7 @@ class Auth {
             'signed',
             (r) =>
             {
+                console.log('signed');
                 if (r.error)
                 {
                     $scope.status = {

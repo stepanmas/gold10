@@ -143,6 +143,7 @@ io.on(
                     user_data,
                     (r) =>
                     {
+                        console.log('signed', r);
                         socket.emit(
                             'signed',
                             r

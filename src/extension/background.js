@@ -1,9 +1,12 @@
 chrome.tabs.onUpdated.addListener(
-    function (tabId)
+    function (tabId, info)
     {
-        chrome.tabs.executeScript(
-            tabId,
-            {file: "foreground.js"}
-        );
+        if (info.status == "complete")
+        {
+            chrome.tabs.executeScript(
+                tabId,
+                {file: "foreground.js"}
+            );
+        }
     }
 );

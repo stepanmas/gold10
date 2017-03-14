@@ -34,7 +34,8 @@
     ],
 
     "web_accessible_resources": [
-        "/editor.html",
+        "/html/label.html",
+        "/html/tooltip.html",
         "/foreground.js"
     ]
 }

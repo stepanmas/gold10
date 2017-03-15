@@ -2,7 +2,7 @@
 
 (function ()
 {
-    if (window.location.host === 'gold10.stepanmas.com')
+    if (window.location.host === 'gold10.stepanmas.com' || document.getElementById('gold10_label'))
     {
         return;
     }

@@ -78,25 +78,37 @@
                     let div       = document.createElement('div');
                     div.id        = 'gold10_label';
                     div.innerHTML = html;
-                    this.el = div;
+                    this.el       = div;
                     cb(div);
                 }
             );
         }
         
+        genKey()
+        {
+            return core.random(0, this.list.length - 1);
+        }
+        
         setNext()
         {
-            let key = core.random(0, this.list.length - 1);
+            let key     = this.genKey();
+            let keys    = ['original', 'translate'];
+            let wordKey = core.random(0, 1);
+            
+            if (key === this.key) return this.setNext();
+            
+            this.key = key;
             
             this.el.querySelectorAll('span').forEach(
                 el =>
                 {
-                    el.textContent = this.list[key][el.dataset.key];
+                    el.textContent = this.list[this.key][keys[wordKey]];
+                    wordKey = wordKey ? 0 : 1;
                 }
             );
-            this.el.querySelectorAll('audio')[0].src = this.list[key].sound;
+            this.el.querySelectorAll('audio')[0].src = this.list[this.key].sound;
         }
-    
+        
         timer()
         {
             this._timer = setInterval(
@@ -114,12 +126,12 @@
             {
                 if (this._timer) clearInterval(this._timer);
             };
-    
+            
             this.el.onmouseout = () =>
             {
                 this.timer();
             };
-    
+            
             this.el.onclick = () =>
             {
                 this.el.querySelectorAll('audio')[0].play();
@@ -135,17 +147,19 @@
         }
     }
     
-    let core = new Core();
+    let core  = new Core();
     let label = new Label(
-        el => {
+        el =>
+        {
             document.body.appendChild(el);
         }
     );
     
     chrome.extension.sendMessage(
         {type: 'learn_list'},
-        list => {
-    
+        list =>
+        {
+            
             core.init(list);
             label.init(list);
         }

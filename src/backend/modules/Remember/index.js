@@ -28,10 +28,11 @@ module.exports = class {
                         
                         let condition = [
                             {learned: ago(-1)},
-                            {learned: ago(-3)},
-                            {learned: ago(-7)},
-                            {learned: ago(-14)},
-                            {learned: ago(-30)}
+                            {learned: ago(-4)},
+                            {learned: ago(-11)},
+                            {learned: ago(-25)},
+                            {learned: ago(-55)},
+                            {learned: ago(-117)}
                         ];
                         
                         collection

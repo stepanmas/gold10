@@ -2,6 +2,11 @@
 
 (function ()
 {
+    if (window.location.host === 'gold10.stepanmas.com')
+    {
+        return;
+    }
+    
     class Core {
         id(id)
         {

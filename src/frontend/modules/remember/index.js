@@ -107,7 +107,7 @@ class Remember {
         
         this.$scope.started  = true;
         this.$scope.timeLeft = false;
-        this.$scope.counter  = 3;
+        this.$scope.counter  = 4;
         
         this._timer = this.timeout();
     }

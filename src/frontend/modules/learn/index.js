@@ -7,17 +7,18 @@ class Learn {
         this.$location      = $location;
         this.$timeout       = $timeout;
         this.getPrivateData = getPrivateData;
-    
+        
         $rootScope.setActive('Learn');
         this.bind();
         this.$scope = $scope;
         
-        $scope.started = false;
-        $scope.list    = [];
-        $scope.item    = [];
-        $scope.ok      = this.ok.bind(this);
-        $scope.start   = this.start.bind(this);
-        $scope.notify  = notify;
+        $scope.started     = false;
+        $scope.list        = [];
+        $scope.item        = [];
+        $scope.ok          = this.ok.bind(this);
+        $scope.start       = this.start.bind(this);
+        $scope.saveExample = this.saveExample.bind(this);
+        $scope.notify      = notify;
         
         socket.emit('learn', getPrivateData());
     }
@@ -42,6 +43,29 @@ class Learn {
                 }
             }
         );
+        
+        this.io.off('savedExample');
+        this.io.on(
+            'savedExample', (r) =>
+            {
+                if (!r.error)
+                    this.$scope.notify(r.msg);
+                else
+                    throw new Error(r.error);
+            }
+        );
+    }
+    
+    saveExample()
+    {
+        this.io.emit(
+            'saveExample',
+            {
+                original: this.$scope.item[0].original,
+                example : this.$scope.example,
+            },
+            this.getPrivateData()
+        );
     }
     
     ok()
@@ -59,8 +83,13 @@ class Learn {
             return;
         }
         
+        // save an updated example
+        if (this.$scope.item.length && this.$scope.item[0].example !== this.$scope.example)
+            this.saveExample();
+        
         this.$scope.started = true;
         this.$scope.item    = [this.$scope.list.shift()];
+        this.$scope.example = this.$scope.item[0].example;
     }
 }
 

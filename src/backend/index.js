@@ -241,6 +241,49 @@ io.on(
                 );
             }
         );
+        
+        socket.on(
+            'saveExample',
+            function (params, privateData)
+            {
+                auth.access(
+                    privateData,
+                    userData =>
+                    {
+                        if (userData.error)
+                        {
+                            socket.emit(
+                                'access error',
+                                userData
+                            );
+                        }
+                        else
+                        {
+                            learn.saveExample(
+                                params, userData, (r) =>
+                                {
+                                    if (!r.error)
+                                        socket.emit(
+                                            'savedExample',
+                                            {
+                                                error: null,
+                                                msg  : 'The example was save'
+                                            }
+                                        );
+                                    else
+                                        socket.emit(
+                                            'savedExample',
+                                            {
+                                                error: r.error
+                                            }
+                                        );
+                                }
+                            );
+                        }
+                    }
+                );
+            }
+        );
     }
 );
 

@@ -85,4 +85,37 @@ module.exports = class {
             }
         );
     }
+    
+    saveExample(params, userData, cb)
+    {
+        this.mongo.connect(
+            (db) =>
+            {
+                console.log(params);
+                db.collection(
+                    'words',
+                    (err, collection) =>
+                    {
+                        assert.equal(null, err);
+                    
+                        collection
+                            .update(
+                                {
+                                    author  : userData._id,
+                                    original: params.original
+                                },
+                                {
+                                    $set: {
+                                        example: params.example,
+                                        changed: Date.now()
+                                    }
+                                }
+                            );
+                    
+                        cb({result: 'success'});
+                    }
+                );
+            }
+        );
+    }
 };

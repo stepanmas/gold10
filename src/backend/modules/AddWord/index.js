@@ -11,9 +11,6 @@ module.exports = class {
     
     save(cb)
     {
-        console.log(this.word);
-        console.log(this.userData);
-        
         this.mongo.connect(
             (db) =>
             {
@@ -36,27 +33,32 @@ module.exports = class {
                                 // if the word exist already, then modify "forgot" option
                                 if (item)
                                 {
+                                    let update = {
+                                        $set : {
+                                            learned      : null,
+                                            translate    : this.word.translate,
+                                            example      : this.word.example,
+                                            imagine      : this.word.imagine,
+                                            changed      : Date.now(),
+                                            transcription: this.word.transcription,
+                                            sound        : this.word.sound
+                                        }
+                                    };
+                                    let message = 'The word already was added, but not learned.';
+                                    
+                                    if (item.learned)
+                                    {
+                                        update.$push = {forgot: Date.now()};
+                                        message = 'Successfully updated, do you forgot the word?';
+                                    }
+                                    
+                                    
                                     collection.update(
                                         criteria,
-                                        {
-                                            $push: {forgot: Date.now()},
-                                            $set : {
-                                                learned      : null,
-                                                translate    : this.word.translate,
-                                                example      : this.word.example,
-                                                imagine      : this.word.imagine,
-                                                changed      : Date.now(),
-                                                transcription: this.word.transcription,
-                                                sound        : this.word.sound
-                                            }
-                                        }
+                                        update
                                     );
                                     
-                                    cb(
-                                        {
-                                            result: 'Successfully update, do you forgot the word?'
-                                        }
-                                    );
+                                    cb({result: message});
                                 }
                                 // save that
                                 else
@@ -81,7 +83,7 @@ module.exports = class {
                                     
                                     cb(
                                         {
-                                            result: 'Success insert.'
+                                            result: 'Successfully inserted.'
                                         }
                                     );
                                 }

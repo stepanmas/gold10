@@ -16,7 +16,7 @@
 
                     <small ng-if="timeLeft" class="text-muted">{{word.transcription}}</small>
 
-                    <audio id="sound" ng-src="{{word.sound}}"></audio>
+                    <audio autoplay id="sound" ng-src="{{word.sound}}"></audio>
 
                     <i ng-if="!timeLeft">{{counter}} sec left</i>
                     <div ng-if="timeLeft">

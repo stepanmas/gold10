@@ -93,7 +93,7 @@ class Remember {
     {
         if (this.$scope.remembe.length)
         {
-            //this.io.emit('forgot', this.$scope.remembe[0].original, this.getPrivateData());
+            this.io.emit('forgot', this.$scope.remembe[0].original, this.getPrivateData());
         }
     }
     

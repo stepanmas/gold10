@@ -105,7 +105,7 @@ class Add {
         
         res = {
             original     : this.$scope.phrase,
-            transcription: data.transcription || ll.transcription,
+            transcription: data.transcription || ll.transcription || null,
             translate    : result,
             example      : this.$scope.example,
             sound        : data.sound_url || ll.sound_url,

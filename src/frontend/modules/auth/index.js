@@ -1,62 +1,66 @@
 "use strict";
 
 class Auth {
-    constructor($scope, $rootScope, $location, notify, socket)
+    constructor($scope, $rootScope, $location, $timeout, notify, socket)
     {
         this.notify     = notify;
         this.$scope     = $scope;
         this.$rootScope = $rootScope;
-        $scope.io       = socket;
+        this.io         = socket;
+        this.$timeout   = $timeout;
         
-        $scope.email    = null;
-        $scope.password = null;
-        $scope.submit   = this.submit;
-        $scope.status   = {
+        $scope.email        = null;
+        $scope.password     = null;
+        $scope.submit       = this.submit.bind(this);
+        $scope.openPassword = this.openPassword.bind(this);
+        $scope.status       = {
             show   : false,
             code   : 'danger',
             message: null
         };
         
         this.$location = $location;
+        
+        this.bind();
+        $rootScope.setActive('Remember');
+    }
     
-        socket.off('signed');
-        socket.on(
+    bind()
+    {
+        this.io.off('signed');
+        this.io.on(
             'signed',
             (r) =>
             {
                 console.log('signed');
                 if (r.error)
                 {
-                    $scope.status = {
+                    this.$scope.status = {
                         show   : true,
                         code   : r.code || 'danger',
                         message: r.error
                     };
-                    $scope.$digest();
+                    this.$scope.$digest();
                     return;
                 }
                 
-                Object.assign($scope.status, {show: false});
-                $scope.$digest();
+                Object.assign(this.$scope.status, {show: false});
+                this.$scope.$digest();
                 
                 this.signed(r);
             }
         );
-    
-        socket.off('access error');
-        socket.on(
+        
+        this.io.off('access error');
+        this.io.on(
             'access error',
             (error) =>
             {
                 this.notify(error.error);
                 localStorage.removeItem('email');
                 localStorage.removeItem('key');
-                this.$location.path('/');
-                this.$scope.$apply();
             }
         );
-        
-        $rootScope.setActive('Remember');
     }
     
     submit()
@@ -64,8 +68,8 @@ class Auth {
         this.io.emit(
             'signin',
             {
-                email   : this.email,
-                password: this.password
+                email   : this.$scope.email,
+                password: this.$scope.password
             }
         );
     }
@@ -77,6 +81,16 @@ class Auth {
         this.$rootScope.setEmail(r.email);
         this.$location.path('/');
         this.$scope.$apply();
+    }
+    
+    openPassword(e)
+    {
+        let field = angular.element(e.currentTarget.parentNode.querySelectorAll('.openPassword'));
+        
+        if (field.attr('type') === 'password')
+            field.attr('type', 'text');
+        else
+            field.attr('type', 'password');
     }
 }
 

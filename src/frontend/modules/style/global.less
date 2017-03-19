@@ -2,6 +2,10 @@
     margin-top : 5px;
 }
 
+.pr{
+    position : relative;
+}
+
 .translated{
     li{
         padding : 10px 14px;
@@ -103,4 +107,18 @@
 .word-example{
     margin     : 15px 0;
     text-align : center;
+}
+
+.openPassword{
+    &-eye{
+        position : absolute;
+        right    : 0;
+        bottom   : 0;
+        padding  : 10px;
+        cursor   : pointer;
+
+        &:hover{
+            color : green;
+        }
+    }
 }

@@ -34,7 +34,7 @@
             </div>
 
             <div class="text-muted word-example" ng-if="started && item && item[0]">
-                <input ng-model="$parent.example" ng-focus="$parent.input_focus = true" ng-blur="$parent.input_focus = false" class="form-control text-center key-E" data-key-action="focus" type="text"/>
+                <input placeholder="(E)" ng-model="$parent.example" ng-focus="$parent.input_focus = true" ng-blur="$parent.input_focus = false" class="form-control text-center key-E" data-key-action="focus" type="text"/>
             </div>
 
             <button ng-if="!started && learn.length" ng-click="start()" class="btn btn-success btn-block key-enter">

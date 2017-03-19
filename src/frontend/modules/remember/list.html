@@ -6,7 +6,7 @@
             </ul>
 
             <ul class="word-cell list-unstyled" ng-if="started">
-                <li ng-repeat="word in remembe" ng-click="$parent.ok($event)">
+                <li ng-repeat="word in remembe" ng-click="$parent.ok($event)" class="key-space">
                     <div ng-if="word.imagine" class="image-box" ng-class="{'grease': !timeLeft}">
                         <img ng-src="{{word.imagine}}" alt=""/>
                     </div>
@@ -23,13 +23,16 @@
                         <span onclick="document.getElementById('sound').play()"
                               class="fa fa-volume-up fa-3x prevent-remember"></span>
                     </div>
+                    <div ng-if="!timeLeft">
+                        <small class="text-muted key-help">(Space if remember)</small>
+                    </div>
 
-                    <sup class="text-danger">{{word.forgot.length ? word.forgot.length : ''}}</sup>
+                    <sup class="text-danger word-forgot">{{word.forgot.length ? word.forgot.length : ''}}</sup>
                 </li>
             </ul>
 
-            <button ng-if="timeLeft" ng-click="start()" class="btn btn-success center-block">Continue</button>
-            <button ng-if="!started && remember.length" ng-click="start()" class="btn btn-success btn-block">Start remember</button>
+            <button ng-if="timeLeft" ng-click="start()" class="btn btn-success center-block key-enter">Continue</button>
+            <button ng-if="!started && remember.length" ng-click="start()" class="btn btn-success btn-block key-enter">Start remember</button>
 
             <div ng-if="!remember.length && !started" class="alert alert-danger">
                 <strong>You have one problem...</strong> nothing to remember!

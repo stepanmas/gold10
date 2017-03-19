@@ -44,6 +44,32 @@ class Remember {
                 }
             }
         );
+    
+        document.removeEventListener('keyup', this.keyBooster.bind(this));
+        document.addEventListener('keyup', this.keyBooster.bind(this));
+    }
+    
+    keyBooster(e)
+    {
+        let selector;
+        
+        switch (e.keyCode)
+        {
+            case 32: // Space
+                selector = '.key-space';
+                break;
+    
+            case 13: // Return
+                selector = '.key-enter';
+                break;
+        }
+        
+        if (selector)
+        {
+            let key = document.querySelectorAll(selector);
+            
+            if (key.length) key[0][key[0].dataset.keyAction ? key[0].dataset.keyAction : 'click']();
+        }
     }
     
     randomWord(one, two)
@@ -67,7 +93,7 @@ class Remember {
     {
         if (this.$scope.remembe.length)
         {
-            this.io.emit('forgot', this.$scope.remembe[0].original, this.getPrivateData());
+            //this.io.emit('forgot', this.$scope.remembe[0].original, this.getPrivateData());
         }
     }
     

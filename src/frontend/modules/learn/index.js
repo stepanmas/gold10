@@ -12,6 +12,7 @@ class Learn {
         this.bind();
         this.$scope = $scope;
         
+        $scope.input_focus = false;
         $scope.started     = false;
         $scope.list        = [];
         $scope.item        = [];
@@ -54,6 +55,57 @@ class Learn {
                     throw new Error(r.error);
             }
         );
+        
+        document.removeEventListener('keyup', this.keyBooster.bind(this));
+        document.addEventListener('keyup', this.keyBooster.bind(this));
+    }
+    
+    keyBooster(e)
+    {
+        let selector;
+        
+        if (this.$scope.input_focus)
+        {
+            if (e.keyCode === 27) //ESC
+            {
+                let key = document.querySelectorAll('.key-E');
+    
+                if (key.length) key[0].blur();
+                this.$scope.input_focus = false;
+            }
+            return;
+        }
+        
+        
+        switch (e.keyCode)
+        {
+            case 79: // O
+                selector = '.key-O';
+                break;
+            
+            case 13: // Return
+                selector = '.key-enter';
+                break;
+            
+            case 32: // Space
+                selector = '.key-space';
+                break;
+            
+            case 77: // M
+                selector = '.key-M';
+                break;
+            
+            case 69: // E
+                selector = '.key-E';
+                break;
+        }
+        
+        if (selector)
+        {
+            let key = document.querySelectorAll(selector);
+            
+            if (key.length) key[0][key[0].dataset.keyAction ? key[0].dataset.keyAction : 'click']();
+        }
     }
     
     saveExample()

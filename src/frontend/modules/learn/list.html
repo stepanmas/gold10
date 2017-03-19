@@ -8,7 +8,7 @@
             <ul class="word-cell list-unstyled" ng-if="started">
                 <li ng-repeat="word in item">
                     <div ng-if="word.imagine" class="image-box">
-                        <img ng-click="$parent.remember = true" ng-src="{{word.imagine}}" alt=""/>
+                        <img class="key-O" ng-click="$parent.remember = true" ng-src="{{word.imagine}}" alt=""/>
                     </div>
 
                     <h5>{{word.original}}</h5>
@@ -20,7 +20,7 @@
 
                     <div>
                         <span onclick="document.getElementById('sound').play()"
-                              class="fa fa-volume-up fa-2x"></span>
+                              class="fa fa-volume-up fa-2x key-space"></span>
                     </div>
 
                     <i ng-if="word.learned" class="text-success word-learned fa fa-check"></i>
@@ -29,15 +29,15 @@
             </ul>
 
             <div ng-if="started" class="text-center">
-                <button ng-if="!item[0].learned" ng-click="ok()" class="btn btn-default">Mark as learned</button>
-                <button ng-click="start()" class="btn btn-success ">Continue</button>
+                <button ng-if="!item[0].learned" ng-click="ok()" class="btn btn-default key-M">Mark as learned</button>
+                <button ng-click="start()" class="btn btn-success key-enter">Continue</button>
             </div>
 
             <div class="text-muted word-example" ng-if="started && item && item[0]">
-                <input ng-model="$parent.example" class="form-control text-center" type="text"/>
+                <input ng-model="$parent.example" ng-focus="$parent.input_focus = true" ng-blur="$parent.input_focus = false" class="form-control text-center key-E" data-key-action="focus" type="text"/>
             </div>
 
-            <button ng-if="!started && learn.length" ng-click="start()" class="btn btn-success btn-block">
+            <button ng-if="!started && learn.length" ng-click="start()" class="btn btn-success btn-block key-enter">
                 Start learn
             </button>
 

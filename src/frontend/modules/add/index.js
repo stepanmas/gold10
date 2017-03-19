@@ -31,7 +31,7 @@ class Add {
             $scope.phrase = $scope.url_params.word;
             this.getTranslate();
         }
-    
+        
         $rootScope.setActive('Add');
     }
     
@@ -80,7 +80,7 @@ class Add {
                 this.$scope.$digest();
             }
         );
-    
+        
         this.io.off('added_word');
         this.io.on(
             'added_word',

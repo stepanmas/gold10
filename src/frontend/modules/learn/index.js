@@ -19,6 +19,7 @@ class Learn {
         $scope.ok          = this.ok.bind(this);
         $scope.start       = this.start.bind(this);
         $scope.saveExample = this.saveExample.bind(this);
+        $scope.openHidden  = this.openHidden.bind(this);
         $scope.notify      = notify;
         
         socket.emit('learn', getPrivateData());
@@ -69,7 +70,7 @@ class Learn {
             if (e.keyCode === 27) //ESC
             {
                 let key = document.querySelectorAll('.key-E');
-    
+                
                 if (key.length) key[0].blur();
                 this.$scope.input_focus = false;
             }
@@ -104,8 +105,33 @@ class Learn {
         {
             let key = document.querySelectorAll(selector);
             
-            if (key.length) key[0][key[0].dataset.keyAction ? key[0].dataset.keyAction : 'click']();
+            if (key.length)
+            {
+                key[0][key[0].dataset.keyAction ? key[0].dataset.keyAction : 'click']();
+                
+                if (selector == '.key-O')
+                {
+                    let ib = document.querySelectorAll('.image-box');
+                    
+                    if (ib.length)
+                    {
+                        ib[0].classList.remove('grease');
+                    }
+                }
+            }
         }
+    }
+    
+    openHidden()
+    {
+        let ib = document.querySelectorAll('.image-box');
+        
+        if (ib.length)
+        {
+            ib[0].classList.remove('grease');
+        }
+        
+        this.$scope.remember = true;
     }
     
     saveExample()

@@ -128,6 +128,7 @@ class Learn {
     
     start()
     {
+        console.log(this.$scope.list);
         if (!this.$scope.list.length)
         {
             this.$scope.started = false;

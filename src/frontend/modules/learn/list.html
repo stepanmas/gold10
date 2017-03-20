@@ -7,7 +7,7 @@
 
             <ul class="word-cell list-unstyled" ng-if="started">
                 <li ng-repeat="word in item">
-                    <div ng-if="word.imagine" class="image-box">
+                    <div ng-if="word.imagine" class="image-box" ng-class="{'grease': word.learned}">
                         <img class="key-O" ng-click="$parent.remember = true" ng-src="{{word.imagine}}" alt=""/>
                     </div>
 

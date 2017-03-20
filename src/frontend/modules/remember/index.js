@@ -121,6 +121,7 @@ class Remember {
     
     start()
     {
+        console.log(this.$scope.remember);
         if (!this.$scope.remember.length)
         {
             this.$scope.started  = false;

@@ -166,9 +166,10 @@ class Learn {
         if (this.$scope.item.length && this.$scope.item[0].example !== this.$scope.example)
             this.saveExample();
         
-        this.$scope.started = true;
-        this.$scope.item    = [this.$scope.list.shift()];
-        this.$scope.example = this.$scope.item[0].example;
+        this.$scope.remember = false;
+        this.$scope.started  = true;
+        this.$scope.item     = [this.$scope.list.shift()];
+        this.$scope.example  = this.$scope.item[0].example;
     }
 }
 

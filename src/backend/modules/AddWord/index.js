@@ -21,7 +21,7 @@ module.exports = class {
                         
                         let criteria = {
                             author  : this.userData._id,
-                            original: this.word.original
+                            original: this.word.original.toLowerCase()
                         };
                         
                         collection.findOne(
@@ -72,7 +72,7 @@ module.exports = class {
                                             changed      : null,
                                             learned      : null,
                                             forgot       : [],
-                                            original     : this.word.original,
+                                            original     : this.word.original.toLowerCase(),
                                             translate    : this.word.translate,
                                             example      : this.word.example,
                                             imagine      : this.word.imagine,

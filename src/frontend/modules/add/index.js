@@ -104,7 +104,7 @@ class Add {
         data = JSON.parse(data);
         
         res = {
-            original     : this.$scope.phrase,
+            original     : this.$scope.phrase.toLowerCase(),
             transcription: data.transcription || ll.transcription || null,
             translate    : result,
             example      : this.$scope.example,

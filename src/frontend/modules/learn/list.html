@@ -7,8 +7,9 @@
 
             <ul class="word-cell list-unstyled" ng-if="started">
                 <li ng-repeat="word in item">
-                    <div ng-if="word.imagine" class="image-box" ng-class="{'grease': word.learned}">
-                        <img class="key-O" ng-click="$parent.openHidden()" ng-src="{{word.imagine}}" alt=""/>
+                    <div class="image-box key-O" ng-class="{'grease': word.learned}" ng-click="openHidden()">
+                        <img ng-if="word.imagine" ng-src="{{word.imagine}}" alt=""/>
+                        <i ng-if="!word.imagine" class="fa fa-question"></i>
                     </div>
 
                     <h5>{{word.original}}</h5>
@@ -24,7 +25,7 @@
                     </div>
 
                     <i ng-if="word.learned" class="text-success word-learned fa fa-check"></i>
-                    <sup class="text-danger word-forgot">{{word.forgot.length ? word.forgot.length : ''}}</sup>
+                    <sup title="How many times forgot" class="text-danger word-forgot">{{word.forgot.length ? word.forgot.length : ''}}</sup>
                 </li>
             </ul>
 

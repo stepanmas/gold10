@@ -26,3 +26,7 @@
 #gold10_label:hover span + span{
     display : block;
 }
+
+#gold10_label audio{
+    display: none !important;
+}

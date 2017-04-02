@@ -47,7 +47,7 @@ app.config(
                     'learn', {
                         url        : '/learn',
                         templateUrl: "learn/list.html",
-                        controller : ['$scope', '$rootScope', '$location', '$timeout', 'notify', 'io', 'getUserData', Learn],
+                        controller : ['$scope', '$rootScope', '$document', '$location', '$timeout', 'notify', 'io', 'getUserData', Learn],
                         isAuth     : function ()
                         {
                             return (localStorage.getItem('email') && localStorage.getItem('key'));

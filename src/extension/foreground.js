@@ -106,7 +106,7 @@
                     wordKey = wordKey ? 0 : 1;
                 }
             );
-            this.el.querySelectorAll('audio')[0].src = this.list[this.key].sound;
+            this.el.dataset.audio = this.list[this.key].sound;
         }
         
         timer()
@@ -134,6 +134,7 @@
             
             this.el.onclick = () =>
             {
+                this.el.querySelectorAll('audio')[0].src = this.el.dataset.audio;
                 this.el.querySelectorAll('audio')[0].play();
             };
         }

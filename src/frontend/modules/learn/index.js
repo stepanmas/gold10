@@ -141,15 +141,16 @@ class Learn {
     }
 
     start() {
+        // save an updated example
+        if (this.$scope.item.length && this.$scope.item[0].example !== this.$scope.example)
+            this.saveExample();
+
         if (!this.$scope.list.length) {
+            this.$scope.item    = [];
             this.$scope.started = false;
             this.io.emit('learn', this.getPrivateData());
             return;
         }
-
-        // save an updated example
-        if (this.$scope.item.length && this.$scope.item[0].example !== this.$scope.example)
-            this.saveExample();
 
         this.$scope.remember = false;
         this.$scope.started  = true;

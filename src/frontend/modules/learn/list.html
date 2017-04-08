@@ -12,20 +12,27 @@
                         <i ng-if="!word.imagine" class="fa fa-question"></i>
                     </div>
 
-                    <h5>{{word.original}}</h5>
-                    <h5 ng-class="remember || !word.learned ? '' : 'invisible'">{{word.translate}}</h5>
+                    <div ng-init="has_en = $parent.randomBool()">
+                        <h5 ng-class="!word.learned || (has_en || remember) ? '' : 'invisible'">
+                            {{word.original}}</h5>
+                        <h5 ng-class="!word.learned || (!has_en || remember) ? '' : 'invisible'">
+                            {{word.translate}}</h5>
 
-                    <small class="text-muted">{{word.transcription}}</small>
 
-                    <audio autoplay id="sound" ng-src="{{word.sound}}"></audio>
+                        <small ng-class="!word.learned || (has_en || remember) ? '' : 'invisible'"
+                               class="text-muted">{{word.transcription}}
+                        </small>
 
-                    <div>
-                        <span onclick="document.getElementById('sound').play()"
-                              class="fa fa-volume-up fa-2x key-space"></span>
+                        <audio ng-attr-autoplay="{{has_en || !word.learned ? 'autoplay' : undefined}}" id="sound" ng-src="{{word.sound}}"></audio>
+
+                        <div>
+                            <span onclick="document.getElementById('sound').play()"
+                                  class="fa fa-volume-up fa-2x key-space"></span>
+                        </div>
                     </div>
 
-                    <i ng-if="word.learned" class="text-success word-learned fa fa-check"></i>
-                    <sup title="How many times forgot" class="text-danger word-forgot">{{word.forgot.length ? word.forgot.length : ''}}</sup>
+                    <sup title="How many times forgot" class="text-danger word-forgot">{{word.forgot.length ?
+                        word.forgot.length : ''}}</sup>
                 </li>
             </ul>
 
@@ -35,7 +42,9 @@
             </div>
 
             <div class="text-muted word-example" ng-if="started && item && item[0]">
-                <input placeholder="(E)" ng-model="$parent.example" ng-focus="$parent.input_focus = true" ng-blur="$parent.input_focus = false" class="form-control text-center key-E" data-key-action="focus" type="text"/>
+                <input placeholder="(E)" ng-model="$parent.example" ng-focus="$parent.input_focus = true"
+                       ng-blur="$parent.input_focus = false" class="form-control text-center key-E"
+                       data-key-action="focus" type="text"/>
             </div>
 
             <button ng-if="!started && learn.length" ng-click="start()" class="btn btn-success btn-block key-enter">

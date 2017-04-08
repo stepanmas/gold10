@@ -16,7 +16,7 @@ class Remember {
         $scope.remembe    = [];
         $scope.start      = this.start.bind(this);
         $scope.ok         = this.ok.bind(this);
-        $scope.randomWord = this.randomWord.bind(this);
+        $scope.randomBool = this.randomBool.bind(this);
         $scope.notify     = notify;
         
         socket.emit('today', getPrivateData());
@@ -29,7 +29,6 @@ class Remember {
         this.io.on(
             'today', (r) =>
             {
-                console.log('got today event');
                 this.$scope.today = r;
                 
                 if (r.length)
@@ -71,10 +70,9 @@ class Remember {
             if (key.length) key[0][key[0].dataset.keyAction ? key[0].dataset.keyAction : 'click']();
         }
     }
-    
-    randomWord(one, two)
-    {
-        return Math.random() < 0.5 ? one : two;
+
+    randomBool() {
+        return Math.random() >= .5;
     }
     
     ok(e)
@@ -121,7 +119,6 @@ class Remember {
     
     start()
     {
-        console.log(this.$scope.remember);
         if (!this.$scope.remember.length)
         {
             this.$scope.started  = false;

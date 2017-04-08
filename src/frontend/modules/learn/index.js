@@ -20,6 +20,7 @@ class Learn {
         $scope.start       = this.start.bind(this);
         $scope.saveExample = this.saveExample.bind(this);
         $scope.openHidden  = this.openHidden.bind(this);
+        $scope.randomBool  = this.randomBool.bind(this);
         $scope.notify      = notify;
 
         socket.emit('learn', getPrivateData());
@@ -54,6 +55,10 @@ class Learn {
 
         this.$document.off('keyup');
         this.$document.on('keyup', this.keyBooster.bind(this));
+    }
+
+    randomBool() {
+        return Math.random() >= .5;
     }
 
     keyBooster(e) {
@@ -136,7 +141,6 @@ class Learn {
     }
 
     start() {
-        console.log(this.$scope.list);
         if (!this.$scope.list.length) {
             this.$scope.started = false;
             this.io.emit('learn', this.getPrivateData());

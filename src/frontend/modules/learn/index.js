@@ -1,4 +1,5 @@
 "use strict";
+import moment from 'moment';
 
 class Learn {
     constructor($scope, $rootScope, $document, $location, $timeout, notify, socket, getPrivateData) {
@@ -21,6 +22,8 @@ class Learn {
         $scope.saveExample = this.saveExample.bind(this);
         $scope.openHidden  = this.openHidden.bind(this);
         $scope.randomBool  = this.randomBool.bind(this);
+        $scope.moment      = this.moment.bind(this);
+        $scope.play        = this.play.bind(this);
         $scope.notify      = notify;
 
         socket.emit('learn', getPrivateData());
@@ -55,6 +58,14 @@ class Learn {
 
         this.$document.off('keyup');
         this.$document.on('keyup', this.keyBooster.bind(this));
+    }
+
+    play(i) {
+        document.getElementById(`sound${i}`).play();
+    }
+
+    moment(date) {
+        return moment(date).endOf('day').fromNow();
     }
 
     randomBool() {

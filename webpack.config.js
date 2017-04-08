@@ -89,7 +89,9 @@
                     filename: 'index.html',
                     template: path.resolve(BACK_DIR, 'index.html')
                 }
-            )
+            ),
+
+            new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/)
         ],
         
         resolve: {
@@ -97,7 +99,11 @@
                 path.resolve('src/frontend/modules'),
                 path.resolve('node_modules')
             ],
-            extensions: ["", ".js"]
+            extensions: ["", ".js"],
+
+            alias             : {
+                moment: 'moment/moment',
+            }
         },
         
         resolveLoader: {

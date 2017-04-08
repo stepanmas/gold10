@@ -13,10 +13,16 @@
             </div>
 
             <ul ng-if="!started" class="list-group">
-                <li ng-repeat="item in learn" class="list-group-item">
-                    <span ng-if="visible_en">{{item.original}}</span>
+                <li ng-repeat="(i, item) in learn" class="list-group-item" ng-click="play(i)">
+                    <span class="fa fa-volume-up"></span>
+                    <span ng-if="visible_en">{{item.original}} <small class="text-muted" ng-if="visible_en">{{item.transcription}}</small></span>
                     <span ng-if="visible_en && visible_ru">&mdash;</span>
                     <span ng-if="visible_ru">{{item.translate}}</span>
+
+                    <small class="text-muted pull-right">{{ $parent.moment(item.added) }}</small>
+                    <small class="text-danger pull-right mr10" ng-if="item.forgot.length">{{item.forgot.length}}</small>
+
+                    <audio ng-attr-id="{{'sound' + i}}" ng-src="{{item.sound}}"></audio>
                 </li>
             </ul>
 

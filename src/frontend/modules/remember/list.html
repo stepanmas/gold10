@@ -1,8 +1,25 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
+            <div class="btn-group mb10" ng-init="has_en = randomBool()">
+                <button ng-init="visible_en = has_en" type="button" class="btn btn-default" ng-model="visible_en"
+                        uib-btn-checkbox
+                        btn-checkbox-true="true" btn-checkbox-false="false">
+                    Toggle EN
+                </button>
+                <button ng-init="visible_ru = !has_en" type="button" class="btn btn-default" ng-model="visible_ru"
+                        uib-btn-checkbox
+                        btn-checkbox-true="true" btn-checkbox-false="false">
+                    Toggle Other
+                </button>
+            </div>
+
             <ul ng-if="!started" class="list-group">
-                <li ng-repeat="item in today" class="list-group-item">{{item.original}} &mdash; {{item.translate}}</li>
+                <li ng-repeat="item in today" class="list-group-item">
+                    <span ng-if="visible_en">{{item.original}}</span>
+                    <span ng-if="visible_en && visible_ru">&mdash;</span>
+                    <span ng-if="visible_ru">{{item.translate}}</span>
+                </li>
             </ul>
 
             <ul class="word-cell list-unstyled" ng-if="started">

@@ -89,6 +89,10 @@ chrome.extension.onMessage.addListener(
                 }
             );
         }
+        else if (r.type === 'cache_reset')
+        {
+            localStorage.removeItem('gold10_learn_list');
+        }
         
         return true;
     }

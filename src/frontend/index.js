@@ -101,7 +101,6 @@ app.config(
                         element.addClass('sticky');
                     else
                         element.removeClass('sticky');
-
                 });
             }
         };

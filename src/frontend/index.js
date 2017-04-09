@@ -30,16 +30,14 @@ app.config(
     [
         '$stateProvider',
         '$urlRouterProvider',
-        function ($stateProvider, $urlRouterProvider)
-        {
+        function ($stateProvider, $urlRouterProvider) {
             $stateProvider
                 .state(
                     'list', {
                         url        : '/',
                         templateUrl: "remember/list.html",
                         controller : ['$scope', '$rootScope', '$location', '$timeout', 'notify', 'io', 'getUserData', Remember],
-                        isAuth     : function ()
-                        {
+                        isAuth     : function () {
                             return (localStorage.getItem('email') && localStorage.getItem('key'));
                         }
                     }
@@ -49,8 +47,7 @@ app.config(
                         url        : '/learn',
                         templateUrl: "learn/list.html",
                         controller : ['$scope', '$rootScope', '$document', '$location', '$timeout', 'notify', 'io', 'getUserData', Learn],
-                        isAuth     : function ()
-                        {
+                        isAuth     : function () {
                             return (localStorage.getItem('email') && localStorage.getItem('key'));
                         }
                     }
@@ -67,8 +64,7 @@ app.config(
                         url        : '/add?word',
                         templateUrl: "add/form.html",
                         controller : ['$scope', '$rootScope', 'notify', '$http', '$location', 'io', 'getUserData', Add],
-                        isAuth: function ()
-                        {
+                        isAuth     : function () {
                             return (localStorage.getItem('email') && localStorage.getItem('key'));
                         }
                     }
@@ -78,20 +74,36 @@ app.config(
         }
     ]
 )
-   .run(
-       [
-           '$rootScope',
-           '$location',
-           function ($rootScope, $location)
-           {
-               $rootScope.$on(
-                   '$stateChangeStart', function (ev, next)
-                   {
-                       if (next.isAuth && !next.isAuth())
-                           $location.path('/auth');
-                   }
-               );
-           }
-       ]
-   )
+    .run(
+        [
+            '$rootScope',
+            '$location',
+            function ($rootScope, $location) {
+                $rootScope.$on(
+                    '$stateChangeStart', function (ev, next) {
+                        if (next.isAuth && !next.isAuth())
+                            $location.path('/auth');
+                    }
+                );
+            }
+        ]
+    )
+    .directive('sticky', function ($window) {
+        var $win = angular.element($window);
+
+        return {
+            restrict: 'A',
+            link    : function (scope, element) {
+                var offsetTop = element[0].getBoundingClientRect().top;
+
+                $win.on('scroll', function () {
+                    if (window.pageYOffset >= offsetTop)
+                        element.addClass('sticky');
+                    else
+                        element.removeClass('sticky');
+
+                });
+            }
+        };
+    })
 ;

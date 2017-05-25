@@ -37,7 +37,9 @@ app.config(
                     'list', {
                         url        : '/',
                         templateUrl: "remember/list.html",
-                        controller : ['$scope', '$rootScope', '$location', '$timeout', 'notify', 'io', 'getUserData', Remember],
+                        controller : [
+                            '$scope', '$rootScope', '$location', '$timeout', 'notify', 'io', 'getUserData', Remember
+                        ],
                         isAuth     : function ()
                         {
                             return (localStorage.getItem('email') && localStorage.getItem('key'));
@@ -48,7 +50,10 @@ app.config(
                     'learn', {
                         url        : '/learn',
                         templateUrl: "learn/list.html",
-                        controller : ['$scope', '$rootScope', '$document', '$location', '$timeout', 'notify', 'io', 'getUserData', Learn],
+                        controller : [
+                            '$scope', '$rootScope', '$document', '$location', '$timeout', 'notify', 'io', 'getUserData',
+                            Learn
+                        ],
                         isAuth     : function ()
                         {
                             return (localStorage.getItem('email') && localStorage.getItem('key'));
@@ -78,50 +83,55 @@ app.config(
         }
     ]
 )
-    .run(
-        [
-            '$rootScope',
-            '$location',
-            function ($rootScope, $location)
-            {
-                $rootScope.$on(
-                    '$stateChangeStart', function (ev, next)
-                    {
-                        if (next.isAuth && !next.isAuth())
-                            $location.path('/auth');
-                    }
-                );
-            }
-        ]
-    )
-    .directive('sticky', function ($window)
-    {
-        var $win = angular.element($window);
-        
-        return {
-            restrict: 'A',
-            link    : function (scope, element)
-            {
-                var offsetTop = element[0].getBoundingClientRect().top;
-                
-                $win.on('scroll', function ()
-                {
-                    if (window.pageYOffset >= offsetTop)
-                        element.addClass('sticky');
-                    else
-                        element.removeClass('sticky');
-                });
-            }
-        };
-    })
+   .run(
+       [
+           '$rootScope',
+           '$location',
+           function ($rootScope, $location)
+           {
+               $rootScope.$on(
+                   '$stateChangeStart', function (ev, next)
+                   {
+                       if (next.isAuth && !next.isAuth())
+                           $location.path('/auth');
+                   }
+               );
+           }
+       ]
+   )
+   .directive(
+       'sticky', function ($window)
+       {
+           var $win = angular.element($window);
+
+           return {
+               restrict: 'A',
+               link    : function (scope, element)
+               {
+                   var offsetTop = element[0].getBoundingClientRect().top;
+
+                   $win.on(
+                       'scroll', function ()
+                       {
+                           if (window.pageYOffset >= offsetTop)
+                               element.addClass('sticky');
+                           else
+                               element.removeClass('sticky');
+                       }
+                   );
+               }
+           };
+       }
+   )
 ;
 
-window.onload = function()
+window.onload = function ()
 {
     setTimeout(
-        () => {
+        () =>
+        {
             document.getElementById('layout-content-loading').classList.add('off');
         },
-        500
+        100
     );
 };

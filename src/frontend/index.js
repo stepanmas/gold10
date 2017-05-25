@@ -99,30 +99,6 @@ app.config(
            }
        ]
    )
-   .directive(
-       'sticky', function ($window)
-       {
-           var $win = angular.element($window);
-
-           return {
-               restrict: 'A',
-               link    : function (scope, element)
-               {
-                   var offsetTop = element[0].getBoundingClientRect().top;
-
-                   $win.on(
-                       'scroll', function ()
-                       {
-                           if (window.pageYOffset >= offsetTop)
-                               element.addClass('sticky');
-                           else
-                               element.removeClass('sticky');
-                       }
-                   );
-               }
-           };
-       }
-   )
 ;
 
 window.onload = function ()

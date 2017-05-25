@@ -1,21 +1,19 @@
 <div class="container">
     <div class="row row--reset">
         <div class="col-xs-12" ng-init="has_en = randomBool() ; visible_en = has_en ; visible_ru = !has_en">
-            <div class="clearfix text-right">
-                <h2 class="pull-left m0">Remem<span class="hidden-xs">ber</span></h2>
+            <h2 class="pull-left m0">Remem<span class="hidden-xs">ber</span></h2>
 
-                <div sticky ng-if="!started" class="btn-group mb10">
-                    <button type="button" class="btn btn-default" ng-model="$parent.visible_en"
-                            uib-btn-checkbox
-                            btn-checkbox-true="true" btn-checkbox-false="false">
-                        Toggle EN
-                    </button>
-                    <button type="button" class="btn btn-default" ng-model="$parent.visible_ru"
-                            uib-btn-checkbox
-                            btn-checkbox-true="true" btn-checkbox-false="false">
-                        Toggle Other
-                    </button>
-                </div>
+            <div ng-if="!started" class="btn-group mb10 stickied">
+                <button type="button" class="btn btn-default" ng-model="$parent.visible_en"
+                        uib-btn-checkbox
+                        btn-checkbox-true="true" btn-checkbox-false="false">
+                    Toggle EN
+                </button>
+                <button type="button" class="btn btn-default" ng-model="$parent.visible_ru"
+                        uib-btn-checkbox
+                        btn-checkbox-true="true" btn-checkbox-false="false">
+                    Toggle Other
+                </button>
             </div>
 
             <ul ng-if="!started" class="list-group">

@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="row row--reset">
+        <div class="col-xs-12" ng-init="has_en = randomBool() ; visible_en = has_en ; visible_ru = !has_en">
+            <div class="clearfix text-right">
+                <h2 class="pull-left m0">Learn</h2>
+
+                <div sticky ng-if="!started" class="btn-group mb10">
+                    <button type="button" class="btn btn-default" ng-model="$parent.visible_en" uib-btn-checkbox
+                            btn-checkbox-true="true" btn-checkbox-false="false">
+                        Toggle EN
+                    </button>
+                    <button type="button" class="btn btn-default" ng-model="$parent.visible_ru" uib-btn-checkbox
+                            btn-checkbox-true="true" btn-checkbox-false="false">
+                        Toggle Other
+                    </button>
+                </div>
+            </div>
+
+            <ul ng-if="!started" class="list-group">
+                <li ng-repeat="(i, item) in learn" class="list-group-item" ng-click="play(i)">
+                    <span class="fa fa-volume-up"></span>
+                    <span ng-if="visible_en">{{item.original}} <small class="text-muted" ng-if="visible_en">{{item.transcription}}</small></span>
+                    <span ng-if="visible_en && visible_ru">&mdash;</span>
+                    <span ng-if="visible_ru">{{item.translate}}</span>
+
+                    <small class="text-muted pull-right">{{ $parent.moment(item.added) }}</small>
+                    <small class="text-danger pull-right mr10" ng-if="item.forgot.length">{{item.forgot.length}}</small>
+
+                    <audio ng-attr-id="{{'sound' + i}}" ng-src="{{item.sound}}"></audio>
+                </li>
+            </ul>
+
+            <ul class="word-cell list-unstyled" ng-if="started">
+                <li ng-repeat="word in item">
+                    <div class="image-box key-O" ng-class="{'grease': word.learned}" ng-click="openHidden()">
+                        <img ng-if="word.imagine" ng-src="{{word.imagine}}" alt=""/>
+                        <i ng-if="!word.imagine" class="fa fa-question"></i>
+                    </div>
+
+                    <div ng-init="has_en = $parent.randomBool()">
+                        <h5 ng-class="!word.learned || (has_en || remember) ? '' : 'invisible'">
+                            {{word.original}}</h5>
+                        <h5 ng-class="!word.learned || (!has_en || remember) ? '' : 'invisible'">
+                            {{word.translate}}</h5>
+
+
+                        <small ng-class="!word.learned || (has_en || remember) ? '' : 'invisible'"
+                               class="text-muted">{{word.transcription}}
+                        </small>
+
+                        <audio ng-attr-autoplay="{{has_en || !word.learned ? 'autoplay' : undefined}}" id="sound" ng-src="{{word.sound}}"></audio>
+
+                        <div>
+                            <span onclick="document.getElementById('sound').play()"
+                                  class="fa fa-volume-up fa-2x key-space"></span>
+                        </div>
+                    </div>
+
+                    <sup title="How many times forgot" class="text-danger word-forgot">{{word.forgot.length ?
+                        word.forgot.length : ''}}</sup>
+                </li>
+            </ul>
+
+            <div ng-if="started" class="text-center">
+                <button ng-if="!item[0].learned" ng-click="ok()" class="btn btn-default key-M">Mark as learned</button>
+                <button ng-click="start()" class="btn btn-success key-enter">Continue</button>
+            </div>
+
+            <div class="text-muted word-example" ng-if="started && item && item[0]">
+                <input placeholder="(E)" ng-model="$parent.example" ng-focus="$parent.input_focus = true"
+                       ng-blur="$parent.input_focus = false" class="form-control text-center key-E"
+                       data-key-action="focus" type="text"/>
+            </div>
+
+            <button ng-if="!started && learn.length" ng-click="start()" class="btn btn-success btn-block key-enter">
+                Start learn
+            </button>
+
+            <div ng-if="!learn.length && !started" class="alert alert-danger">
+                <strong>You have one problem...</strong> nothing to learn!
+            </div>
+        </div>
+    </div>
+</div>

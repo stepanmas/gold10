@@ -1,0 +1,74 @@
+<div class="container">
+    <div class="row row--reset">
+        <div class="col-xs-12" ng-init="has_en = randomBool() ; visible_en = has_en ; visible_ru = !has_en">
+            <div class="clearfix text-right">
+                <h2 class="pull-left m0">Remem<span class="hidden-xs">ber</span></h2>
+
+                <div sticky ng-if="!started" class="btn-group mb10">
+                    <button type="button" class="btn btn-default" ng-model="$parent.visible_en"
+                            uib-btn-checkbox
+                            btn-checkbox-true="true" btn-checkbox-false="false">
+                        Toggle EN
+                    </button>
+                    <button type="button" class="btn btn-default" ng-model="$parent.visible_ru"
+                            uib-btn-checkbox
+                            btn-checkbox-true="true" btn-checkbox-false="false">
+                        Toggle Other
+                    </button>
+                </div>
+            </div>
+
+            <ul ng-if="!started" class="list-group">
+                <li ng-repeat="(i, item) in today" class="list-group-item" ng-click="play(i)">
+                    <span class="fa fa-volume-up"></span>
+                    <span ng-if="visible_en">{{item.original}} <small class="text-muted" ng-if="visible_en">{{item.transcription}}</small></span>
+                    <span ng-if="visible_en && visible_ru">&mdash;</span>
+                    <span ng-if="visible_ru">{{item.translate}}</span>
+
+                    <small class="text-muted pull-right">{{ $parent.moment(item.learned) }}</small>
+                    <small class="text-danger pull-right mr10" ng-if="item.forgot.length">{{item.forgot.length}}</small>
+
+                    <audio ng-attr-id="{{'sound' + i}}" ng-src="{{item.sound}}"></audio>
+                </li>
+            </ul>
+
+            <ul class="word-cell list-unstyled" ng-if="started">
+                <li ng-repeat="word in remembe" ng-click="$parent.ok($event)" class="key-space">
+                    <div ng-if="word.imagine" class="image-box" ng-class="{'grease': !timeLeft}">
+                        <img ng-src="{{word.imagine}}" alt=""/>
+                    </div>
+
+                    <div ng-init="has_en = $parent.randomBool()">
+                        <h5 ng-class="has_en || timeLeft ? '' : 'invisible'">{{word.original}}</h5>
+                        <h5 ng-class="!has_en || timeLeft ? '' : 'invisible'">{{word.translate}}</h5>
+
+                        <small ng-if="timeLeft" class="text-muted">{{word.transcription}}</small>
+
+                        <audio ng-attr-autoplay="{{has_en ? 'autoplay' : undefined}}" id="sound"
+                               ng-src="{{word.sound}}"></audio>
+
+                        <i ng-if="!timeLeft">{{counter}} sec left</i>
+                        <div ng-if="timeLeft">
+                        <span onclick="document.getElementById('sound').play()"
+                              class="fa fa-volume-up fa-2x prevent-remember"></span>
+                        </div>
+                        <div ng-if="!timeLeft">
+                            <small class="text-muted key-help">(Space if remember)</small>
+                        </div>
+                    </div>
+
+                    <sup class="text-danger word-forgot">{{word.forgot.length ? word.forgot.length : ''}}</sup>
+                </li>
+            </ul>
+
+            <button ng-if="timeLeft" ng-click="start()" class="btn btn-success center-block key-enter">Continue</button>
+            <button ng-if="!started && remember.length" ng-click="start()" class="btn btn-success btn-block key-enter">
+                Start remember
+            </button>
+
+            <div ng-if="!remember.length && !started" class="alert alert-danger">
+                <strong>You have one problem...</strong> nothing to remember!
+            </div>
+        </div>
+    </div>
+</div>

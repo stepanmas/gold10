@@ -1,0 +1,76 @@
+<html lang="en-US" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Gold 10 words or phrases every day</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#56b48c">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+    <style type="text/css">
+        #layout-content-loading {
+            position   : fixed;
+            transition : opacity .5s;
+            opacity    : 1;
+            left       : 0;
+            top        : 0;
+            width      : 100%;
+            height     : 100%;
+            background : #fff;
+            z-index    : 102;
+        }
+
+        #layout-content-loading i {
+            position    : absolute;
+            left        : 50%;
+            top         : 50%;
+            margin-left : -20px;
+            margin-top  : -20px;
+        }
+
+        #layout-content-loading.off {
+            opacity        : 0;
+            pointer-events : none;
+        }
+    </style>
+</head>
+<body>
+    <div id="layout-content-loading">
+        <i class="fa fa-cog fa-spin fa-3x"></i>
+    </div>
+
+    <nav ng-controller="navbar" class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button ng-click="isCollapsed = !isCollapsed" type="button" class="navbar-toggle collapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand">{{name}}</span>
+            </div>
+
+            <div class="navbar-collapse collapse" uib-collapse="!isCollapsed">
+                <ul class="nav navbar-nav">
+                    <li ng-repeat="link in links" ng-class="{active: $parent.curPage === link.title}">
+                        <a ng-click="$parent.isCollapsed = false" ng-href="{{link.src}}">{{link.title}}</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-class="{active: curPage === 'Auth'}">
+                        <a ng-href="#!/auth">{{email}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ui-view"></div>
+<script type="text/javascript" src="/bundle.js?fa3774bcc8fe2f06e6bf"></script></body>
+</html>

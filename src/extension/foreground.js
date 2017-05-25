@@ -2,30 +2,31 @@
 
 (function ()
 {
-    if (window.location.host === 'gold10.stepanmas.com' || document.getElementById('gold10_label') || window.location.host === 'localhost:8090') {
+    if (window.location.host === 'gold10.stepanmas.com' || document.getElementById('gold10_label') || window.location.host === 'localhost:8090')
+    {
         return;
     }
-    
+
     class Core {
         id(id)
         {
             return document.getElementById(id);
         }
-        
+
         get(url, cb)
         {
             var xhr = new XMLHttpRequest();
-            
+
             xhr.open('GET', chrome.extension.getURL(url), true);
             xhr.send();
-            
+
             xhr.onreadystatechange = function ()
             {
                 if (xhr.status === 200 && xhr.readyState === 4)
                     cb(xhr.responseText);
             };
         }
-        
+
         style(cb)
         {
             this.get(
@@ -37,24 +38,27 @@
                 }
             );
         }
-        
+
         random(min, max)
         {
             var argc = arguments.length;
-            if (argc === 0) {
+            if (argc === 0)
+            {
                 min = 0;
                 max = 2147483647;
             }
-            else if (argc === 1) {
+            else if (argc === 1)
+            {
                 throw new Error('Warning: mt_rand() expects exactly 2 parameters, 1 given')
             }
-            else {
+            else
+            {
                 min = parseInt(min, 10);
                 max = parseInt(max, 10);
             }
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-        
+
         init()
         {
             this.style(
@@ -68,6 +72,8 @@
     class Label {
         constructor(cb)
         {
+            this._timeToggle = 4000;
+
             core.get(
                 '/html/label.html', html =>
                 {
@@ -79,22 +85,22 @@
                 }
             );
         }
-        
+
         genKey()
         {
             return core.random(0, this.list.length - 1);
         }
-        
+
         setNext()
         {
             let key     = this.genKey();
             let keys    = ['original', 'translate'];
             let wordKey = core.random(0, 1);
-            
+
             if (key === this.key) return this.setNext();
-            
+
             this.key = key;
-            
+
             this.el.querySelectorAll('span').forEach(
                 el =>
                 {
@@ -103,8 +109,26 @@
                 }
             );
             this.el.dataset.audio = this.list[this.key].sound;
+            this.voiceWord();
         }
-        
+
+        voiceWord()
+        {
+            chrome.runtime.sendMessage(
+                {
+                    type      : 'voice',
+                    timeToggle: this._timeToggle
+                },
+                mayRun =>
+                {
+                    if (mayRun)
+                    {
+                        this.el.click();
+                    }
+                }
+            );
+        }
+
         timer()
         {
             this._timer = setInterval(
@@ -112,22 +136,22 @@
                 {
                     this.setNext();
                 },
-                4000
+                this._timeToggle
             );
         }
-        
+
         bind()
         {
             this.el.onmouseover = () =>
             {
                 if (this._timer) clearInterval(this._timer);
             };
-            
+
             this.el.onmouseout = () =>
             {
                 this.timer();
             };
-            
+
             this.el.onclick = (e) =>
             {
                 if (e.ctrlKey)
@@ -140,7 +164,7 @@
                 this.el.querySelectorAll('audio')[0].play();
             };
         }
-        
+
         init(list)
         {
             this.list = list;
@@ -149,7 +173,7 @@
             this.bind();
         }
     }
-    
+
     let core  = new Core();
     let label = new Label(
         el =>
@@ -157,27 +181,27 @@
             document.body.appendChild(el);
         }
     );
-    
+
     chrome.extension.sendMessage(
         {type: 'learn_list'},
         list =>
         {
-            
             core.init(list);
             label.init(list);
         }
     );
-    
+
     /* Events
      ================================================== */
-    
+
     document.ondblclick = function ()
     {
         let selection = window.getSelection().toString();
-        
-        if (selection) {
+
+        if (selection)
+        {
             chrome.runtime.sendMessage({type: 'translate', text: selection});
         }
     };
-    
+
 })();

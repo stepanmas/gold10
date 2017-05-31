@@ -1,5 +1,3 @@
-const VOICETIMEOUT = [5, 'minute'];
-
 self.params = {
     server   : 'https://gold10.stepanmas.com',
     io_params: {
@@ -94,25 +92,6 @@ chrome.extension.onMessage.addListener(
         else if (r.type === 'cache_reset')
         {
             localStorage.removeItem('gold10_learn_list');
-        }
-
-        else if (r.type === 'voice')
-        {
-            let nextRun = moment().add(VOICETIMEOUT[0], VOICETIMEOUT[1]).format();
-
-            if (!localStorage.getItem('voice')) localStorage.setItem('voice', nextRun);
-
-            let voice = localStorage.getItem('voice');
-
-            if (moment().isAfter(voice))
-            {
-                localStorage.setItem('voice', nextRun);
-                sendResponse(true);
-            }
-            else
-            {
-                sendResponse(false);
-            }
         }
         
         return true;

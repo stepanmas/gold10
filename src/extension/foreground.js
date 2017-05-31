@@ -2,10 +2,12 @@
 
 (function ()
 {
-    if (window.location.host === 'gold10.stepanmas.com' || document.getElementById('gold10_label') || window.location.host === 'localhost:8090')
+    if (document.getElementById('gold10_label') || window.location.host === 'localhost:8090')
     {
         return;
     }
+
+    const VOICETIMEOUT = 5 * 60000;
 
     class Core {
         id(id)
@@ -81,6 +83,8 @@
                     div.id        = 'gold10_label';
                     div.innerHTML = html;
                     this.el       = div;
+
+                    if (this.isOurSite()) this.el.style.visibility = 'hidden';
                     cb(div);
                 }
             );
@@ -114,19 +118,22 @@
 
         voiceWord()
         {
-            chrome.runtime.sendMessage(
-                {
-                    type      : 'voice',
-                    timeToggle: this._timeToggle
-                },
-                mayRun =>
-                {
-                    if (mayRun)
+            if (this.isOurSite())
+            {
+                if (this._voiceTimer) return;
+                this._voiceTimer = setInterval(
+                    () =>
                     {
                         this.el.click();
-                    }
-                }
-            );
+                    },
+                    VOICETIMEOUT
+                );
+            }
+        }
+
+        isOurSite()
+        {
+            return window.location.host === 'gold10.stepanmas.com';
         }
 
         timer()

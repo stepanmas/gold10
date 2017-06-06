@@ -7,7 +7,7 @@
         return;
     }
 
-    const VOICETIMEOUT = 3 * 60000;
+    const VOICETIMEOUT = 1 * 60000;
 
     class Core {
         id(id)

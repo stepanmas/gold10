@@ -7,7 +7,7 @@
         return;
     }
 
-    const VOICETIMEOUT = 5 * 60000;
+    const VOICETIMEOUT = 3 * 60000;
 
     class Core {
         id(id)
@@ -84,7 +84,7 @@
                     div.innerHTML = html;
                     this.el       = div;
 
-                    if (this.isOurSite()) this.el.style.visibility = 'hidden';
+                    //if (this.isOurSite()) this.el.style.visibility = 'hidden';
                     cb(div);
                 }
             );

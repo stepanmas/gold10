@@ -40,7 +40,7 @@ module.exports = class {
                                     added  : -1
                                 }
                             )
-                            .limit(20)
+                            .limit(10)
                             .toArray(
                                 function (err, words)
                                 {

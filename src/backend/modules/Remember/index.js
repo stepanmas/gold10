@@ -52,7 +52,7 @@ module.exports = class {
                                     added  : -1
                                 }
                             )
-                            .limit(condition.length * 20)
+                            .limit(condition.length * 10)
                             .toArray(
                                 function (err, words)
                                 {

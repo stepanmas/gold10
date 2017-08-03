@@ -167,8 +167,11 @@
                     location.reload();
                     return;
                 }
-                this.el.querySelectorAll('audio')[0].src = this.el.dataset.audio.replace('http:', '');
-                this.el.querySelectorAll('audio')[0].play();
+                if (!document.querySelectorAll('.b-remember').length)
+                {
+                    this.el.querySelectorAll('audio')[0].src = this.el.dataset.audio.replace('http:', '');
+                    this.el.querySelectorAll('audio')[0].play();
+                }
             };
         }
 

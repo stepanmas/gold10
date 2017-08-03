@@ -11,7 +11,7 @@ import '@cgross/angular-notify/dist/angular-notify.css';
 
 // Other
 import 'style/global.less';
-import 'font-awesome-webpack';
+import 'font-awesome-webpack2';
 
 // Application
 import Remember from 'remember';
@@ -26,12 +26,11 @@ const app = angular.module('app', ['socket', 'getUserData', 'cgNotify', collapse
 app
     .controller('navbar', ['$scope', '$rootScope', '$timeout', Navbar]);
 
-app.config(
+let Config = app.config(
     [
         '$stateProvider',
         '$urlRouterProvider',
-        function ($stateProvider, $urlRouterProvider)
-        {
+        function ($stateProvider, $urlRouterProvider) {
             $stateProvider
                 .state(
                     'list', {
@@ -40,8 +39,7 @@ app.config(
                         controller : [
                             '$scope', '$rootScope', '$location', '$timeout', 'notify', 'io', 'getUserData', Remember
                         ],
-                        isAuth     : function ()
-                        {
+                        isAuth     : function () {
                             return (localStorage.getItem('email') && localStorage.getItem('key'));
                         }
                     }
@@ -54,8 +52,7 @@ app.config(
                             '$scope', '$rootScope', '$document', '$location', '$timeout', 'notify', 'io', 'getUserData',
                             Learn
                         ],
-                        isAuth     : function ()
-                        {
+                        isAuth     : function () {
                             return (localStorage.getItem('email') && localStorage.getItem('key'));
                         }
                     }
@@ -72,8 +69,7 @@ app.config(
                         url        : '/add?word',
                         templateUrl: "add/form.html",
                         controller : ['$scope', '$rootScope', 'notify', '$http', '$location', 'io', 'getUserData', Add],
-                        isAuth     : function ()
-                        {
+                        isAuth     : function () {
                             return (localStorage.getItem('email') && localStorage.getItem('key'));
                         }
                     }
@@ -82,30 +78,33 @@ app.config(
             $urlRouterProvider.otherwise('/');
         }
     ]
-)
-   .run(
-       [
-           '$rootScope',
-           '$location',
-           function ($rootScope, $location)
-           {
-               $rootScope.$on(
-                   '$stateChangeStart', function (ev, next)
-                   {
-                       if (next.isAuth && !next.isAuth())
-                           $location.path('/auth');
-                   }
-               );
-           }
-       ]
-   )
-;
+).config(
+    [
+        '$compileProvider',
+        function ($compileProvider) {
+            $compileProvider.debugInfoEnabled(true);
+        }
+    ]
+);
 
-window.onload = function ()
-{
+Config.run(
+    [
+        '$rootScope',
+        '$location',
+        function ($rootScope, $location) {
+            $rootScope.$on(
+                '$stateChangeStart', function (ev, next) {
+                    if (next.isAuth && !next.isAuth())
+                        $location.path('/auth');
+                }
+            );
+        }
+    ]
+);
+
+window.onload = function () {
     setTimeout(
-        () =>
-        {
+        () => {
             document.getElementById('layout-content-loading').classList.add('off');
         },
         100

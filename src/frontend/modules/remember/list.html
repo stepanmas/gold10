@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container b-remember">
     <div class="row row--reset">
         <div class="col-xs-12" ng-init="has_en = randomBool() ; visible_en = has_en ; visible_ru = !has_en">
             <h2 class="m0">Remem<span class="hidden-xs">ber</span></h2>
@@ -32,8 +32,9 @@
 
             <ul class="word-cell list-unstyled" ng-if="started">
                 <li ng-repeat="word in remembe" ng-click="$parent.ok($event)" class="key-space">
-                    <div ng-if="word.imagine" class="image-box" ng-class="{'grease': !timeLeft}">
+                    <div class="image-box" ng-class="{'grease': !timeLeft}">
                         <img ng-src="{{word.imagine}}" alt=""/>
+                        <i ng-if="!word.imagine" class="fa fa-question"></i>
                     </div>
 
                     <div ng-init="has_en = $parent.randomBool()">

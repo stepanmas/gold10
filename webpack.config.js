@@ -40,7 +40,7 @@
                     loader: 'style-loader!css-loader!less-loader?resolve url'
                 },
                 {
-                    test  : /\.(png|gif|jpg|svg|ttf|eot|woff|woff2)$/,
+                    test  : /\.(png|gif|jpg)$/,
                     loader: 'url-loader?name=[path][name].[ext]?[hash]&limit=4096'
                 },
 

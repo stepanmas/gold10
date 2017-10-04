@@ -1,7 +1,6 @@
 const MongoProvider = require('../mongoProvider');
 const assert        = require('assert');
 const moment        = require('moment');
-const utf8          = require('utf8');
 
 module.exports = class {
     constructor()

@@ -136,11 +136,12 @@ class Learn {
     }
 
     saveExample() {
+        console.warn(this.$scope.example);
         this.io.emit(
             'saveExample',
             {
                 original: this.$scope.item[0].original,
-                example : encodeURIComponent(this.$scope.example),
+                example : this.$scope.example,
             },
             this.getPrivateData()
         );

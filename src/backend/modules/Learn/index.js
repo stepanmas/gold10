@@ -84,6 +84,7 @@ module.exports = class {
 
     saveExample(params, userData, cb)
     {
+        console.log(params.example);
         this.mongo.connect(
             (db) => {
                 console.log(params);

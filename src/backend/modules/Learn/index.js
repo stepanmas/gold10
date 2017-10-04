@@ -100,7 +100,7 @@ module.exports = class {
                                 },
                                 {
                                     $set: {
-                                        example: params.example,
+                                        example: utf8.encode(params.example),
                                         changed: Date.now()
                                     }
                                 }

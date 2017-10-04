@@ -34,7 +34,8 @@
     "@cgross/angular-notify": "^2.5.1",
     "angular": "^1.6.5",
     "angular-ui-bootstrap": "^2.5.0",
-    "angular-ui-router": "^1.0.3",
+    "@uirouter/angularjs": "latest",
+    "@uirouter/visualizer": "latest",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -67,5 +68,9 @@
     "url-loader": "^0.5.9",
     "webpack": "^3.4.1",
     "webpack-dev-server": "^2.6.1"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.6.0",
+    "utf8": "^2.1.2"
   }
 }

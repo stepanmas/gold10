@@ -1,24 +1,23 @@
 const MongoProvider = require('../mongoProvider');
 const assert        = require('assert');
 const moment        = require('moment');
+const utf8          = require('utf8');
 
 module.exports = class {
     constructor()
     {
         this.mongo = new MongoProvider();
     }
-    
+
     list(userData, cb)
     {
         this.mongo.connect(
-            (db) =>
-            {
+            (db) => {
                 db.collection(
                     'words',
-                    (err, collection) =>
-                    {
+                    (err, collection) => {
                         assert.equal(null, err);
-                        
+
                         collection
                             .find(
                                 {
@@ -42,8 +41,7 @@ module.exports = class {
                             )
                             .limit(10)
                             .toArray(
-                                function (err, words)
-                                {
+                                function (err, words) {
                                     assert.equal(null, err);
                                     cb(words);
                                 }
@@ -53,22 +51,20 @@ module.exports = class {
             }
         );
     }
-    
+
     mark(word, userData, cb)
     {
         this.mongo.connect(
-            (db) =>
-            {
+            (db) => {
                 db.collection(
                     'words',
-                    (err, collection) =>
-                    {
+                    (err, collection) => {
                         assert.equal(null, err);
-                    
+
                         collection
                             .update(
                                 {
-                                    author: userData._id,
+                                    author  : userData._id,
                                     original: word
                                 },
                                 {
@@ -78,26 +74,24 @@ module.exports = class {
                                     }
                                 }
                             );
-                        
+
                         cb();
                     }
                 );
             }
         );
     }
-    
+
     saveExample(params, userData, cb)
     {
         this.mongo.connect(
-            (db) =>
-            {
+            (db) => {
                 console.log(params);
                 db.collection(
                     'words',
-                    (err, collection) =>
-                    {
+                    (err, collection) => {
                         assert.equal(null, err);
-                    
+
                         collection
                             .update(
                                 {
@@ -111,7 +105,7 @@ module.exports = class {
                                     }
                                 }
                             );
-                    
+
                         cb({result: 'success'});
                     }
                 );

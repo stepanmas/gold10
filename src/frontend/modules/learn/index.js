@@ -140,7 +140,7 @@ class Learn {
             'saveExample',
             {
                 original: this.$scope.item[0].original,
-                example : this.$scope.example,
+                example : encodeURIComponent(this.$scope.example),
             },
             this.getPrivateData()
         );

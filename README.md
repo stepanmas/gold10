@@ -1,7 +1,7 @@
 # Gold ten
 Learn 10 words or phrases every day
 
-####Run
+### Run
 
     yarn serve
     yarn mongoserve

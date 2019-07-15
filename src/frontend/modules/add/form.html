@@ -1,69 +1,77 @@
 <div class="container">
-    <div class="row row--reset">
-        <div class="col-xs-12">
-            <h4>Add new a phrase or a sentence</h4>
+  <div class="row row--reset">
+    <div class="col-xs-12">
+      <h4>Add new a phrase or a sentence</h4>
 
-            <form>
-                <div class="form-group">
-                    <label for="phrase">Phrase</label>
-                    <input autofocus autocomplete="off" ng-model="phrase" ng-keyup="getTranslate()" type="text"
-                           class="form-control" id="phrase" placeholder="Enter phrase here" value="{{url_params.word}}">
-                </div>
-
-                <i ng-if="loader" class="fa fa-refresh fa-spin fa-3x fa-fw margin-bottom"></i>
-
-                <div ng-if="lingualeo_source" class="lingualeo_approach" ng-click="save($event)" data-source='{{lingualeo_source | json}}' data-result="{{lingualeo_source.translate[0].value}}">
-                    <table width="100%">
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <img ng-if="lingualeo_source.pic_url" ng-src="{{lingualeo_source.pic_url}}" alt=""/>
-                                </div>
-                            </td>
-                            <td width="90%">
-                                <div class="form-group">
-                                    <h3>{{ lingualeo_source.translate[0].value }}</h3>
-                                    <h4 class="text-success">{{ lingualeo_source.transcription }}</h4>
-                                    <small class="text-muted" ng-if="lingualeo_source.word_forms"
-                                           ng-repeat="form in lingualeo_source.word_forms">
-                                        {{form.type}} {{form.word}}
-                                    </small>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <audio id="sound" autoplay ng-src="{{ lingualeo_source.sound_url }}"></audio>
-                                <i onclick="document.getElementById('sound').play()" class="fa fa-volume-up fa-3x prevent-save" aria-hidden="true"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <input class="form-control m-t-sm prevent-save" ng-model="$parent.example" placeholder="A sentence where this word/phrase is used" type="text" name=""/>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <ol ng-repeat="option in translated" class="translated list-unstyled">
-                    <li ng-click="save($event)" ng-if="option.text" ng-repeat="text in option.text" data-source='{{option | json}}' data-result="{{text}}">
-                        {{text}} <small class="pull-right">Yandex</small>
-                    </li>
-
-                    <li ng-click="save($event)" ng-if="option.result" data-source='{{option | json}}' data-result="{{option.result.translated}}">
-                        {{option.result.translated}} <small class="pull-right">Multillect</small>
-                    </li>
-
-                    <li ng-click="save($event)" ng-if="option.translate" ng-repeat="variant in option.translate" data-source='{{option | json}}' data-result="{{variant.value}}">
-                        <img ng-if="variant.pic_url" ng-src="{{variant.pic_url}}" alt=""/>
-
-                        {{variant.value}}
-
-                        <small class="pull-right">
-                            Lingualeo <br />
-                            Votes: {{variant.votes}}
-                        </small>
-                    </li>
-                </ol>
-            </form>
+      <form>
+        <div class="form-group">
+          <label for="phrase">Phrase</label>
+          <input autofocus autocomplete="off" ng-model="phrase" ng-keyup="getTranslate()" type="text"
+                 class="form-control" id="phrase" placeholder="Enter phrase here" value="{{url_params.word}}">
         </div>
+
+        <i ng-if="loader" class="fa fa-refresh fa-spin fa-3x fa-fw margin-bottom"></i>
+
+        <div ng-if="lingualeo_source" class="lingualeo_approach" ng-click="save($event)"
+             data-source="{{lingualeo_source | json}}" data-result="{{lingualeo_source.translate[0].value}}">
+          <table width="100%">
+            <tr>
+              <td>
+                <div class="form-group">
+                  <img ng-if="lingualeo_source.pic_url" ng-src="{{lingualeo_source.pic_url}}" alt="" />
+                </div>
+              </td>
+              <td width="90%">
+                <div class="form-group">
+                  <h3>{{ lingualeo_source.translate[0].value }}</h3>
+                  <h4 class="text-success">{{ lingualeo_source.transcription }}</h4>
+                  <small class="text-muted" ng-if="lingualeo_source.word_forms"
+                         ng-repeat="form in lingualeo_source.word_forms">
+                    {{form.type}} {{form.word}}
+                  </small>
+                </div>
+              </td>
+              <td class="text-right">
+                <audio id="sound" autoplay ng-src="{{ lingualeo_source.sound_url }}"></audio>
+                <i onclick="document.getElementById('sound').play()" class="fa fa-volume-up fa-3x prevent-save"
+                   aria-hidden="true"></i>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <input class="form-control m-t-sm prevent-save" ng-model="$parent.example"
+                       placeholder="A sentence where this word/phrase is used" type="text" name="" />
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <ol ng-repeat="option in translated" class="translated list-unstyled">
+          <li ng-click="save($event)" ng-if="option.text" ng-repeat="text in option.text"
+              data-source="{{option | json}}" data-result="{{text}}">
+            {{text}}
+            <small class="pull-right">Yandex</small>
+          </li>
+
+          <li ng-click="save($event)" ng-if="option.result" data-source="{{option | json}}"
+              data-result="{{option.result.translated}}">
+            {{option.result.translated}}
+            <small class="pull-right">Multillect</small>
+          </li>
+
+          <li ng-click="save($event)" ng-if="option.translate" ng-repeat="variant in option.translate"
+              data-source="{{option | json}}" data-result="{{variant.value}}">
+            <img ng-if="variant.pic_url" ng-src="{{variant.pic_url}}" alt="" />
+
+            {{variant.value}}
+
+            <small class="pull-right">
+              Lingualeo <br />
+              Votes: {{variant.votes}}
+            </small>
+          </li>
+        </ol>
+      </form>
     </div>
+  </div>
 </div>

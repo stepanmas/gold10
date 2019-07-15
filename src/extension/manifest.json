@@ -1,44 +1,42 @@
 {
-    "manifest_version": 2,
-
-    "name": "Gold10",
-    "description": "Learn 10 worlds every day",
-    "version": "0.0.1",
-
-    "background": {
-        "scripts": [
-            "vendor/moment.js",
-            "vendor/socket.io.min.js",
-            "background.js"
-        ]
-    },
-
-    "content_scripts": [
-        {
-            "matches": [ "https://gold10.stepanmas.com/" ],
-            "js": [ "content.js" ],
-            "all_frames": true,
-            "run_at": "document_start"
-        }
-    ],
-
-    "browser_action": {
-        "default_title": "Save any word to your fave",
-        "default_icon": "icon.png",
-        "default_popup": "popup.html"
-    },
-
-    "permissions": [
-        "contextMenus",
-        "tabs",
-        "activeTab",
-        "<all_urls>"
-    ],
-
-    "web_accessible_resources": [
-        "/styles.css",
-        "/html/label.html",
-        "/html/tooltip.html",
-        "/foreground.js"
+  "manifest_version": 2,
+  "name": "Gold10",
+  "description": "Learn 10 worlds every day",
+  "version": "0.0.1",
+  "background": {
+    "scripts": [
+      "vendor/moment.js",
+      "vendor/socket.io.min.js",
+      "background.js"
     ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://gold10.stepanmas.com/"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "browser_action": {
+    "default_title": "Save any word to your fave",
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "activeTab",
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    "/styles.css",
+    "/html/label.html",
+    "/html/tooltip.html",
+    "/foreground.js"
+  ]
 }

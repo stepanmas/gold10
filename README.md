@@ -1,10 +1,10 @@
 # Gold 10
-Learn 10 worlds or phrases every day
+Learn 10 words or phrases every day
 
 ####Run
 
-    npm run serve
-    npm run mongoserve
-    npm run apiserve
+    yarn serve
+    yarn mongoserve
+    yarn apiserve
     or just
     ./run

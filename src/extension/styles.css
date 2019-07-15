@@ -1,32 +1,32 @@
-#gold10_label{
-    position      : fixed;
-    cursor        : default;
-    right         : 0;
-    top           : 0;
-    border-bottom : 1px solid #efefef;
-    border-left   : 1px solid #efefef;
-    background    : #fafafa;
-    padding       : 5px 10px;
-    color         : #555555;
-    z-index       : 2147483647;
+#gold10_label {
+  position: fixed;
+  cursor: default;
+  right: 0;
+  top: 0;
+  border-bottom: 1px solid #efefef;
+  border-left: 1px solid #efefef;
+  background: #fafafa;
+  padding: 5px 10px;
+  color: #555555;
+  z-index: 2147483647;
 }
 
-#gold10_label span{
-    display : block;
+#gold10_label span {
+  display: block;
 }
 
-#gold10_label span + span{
-    display : none;
+#gold10_label span + span {
+  display: none;
 }
 
-#gold10_label:hover span{
-    display : none;
+#gold10_label:hover span {
+  display: none;
 }
 
-#gold10_label:hover span + span{
-    display : block;
+#gold10_label:hover span + span {
+  display: block;
 }
 
-#gold10_label audio{
-    display: none !important;
+#gold10_label audio {
+  display: none !important;
 }

@@ -1,56 +1,57 @@
 <html lang="en-US">
 <head>
-    <meta charset="UTF-8">
-    <title>Gold10</title>
-    <style type="text/css">
-        html, body{
-            margin : 0;
-        }
+  <meta charset="UTF-8">
+  <title>Gold10</title>
+  <style type="text/css">
+    html, body {
+      margin: 0;
+    }
 
-        iframe{
-            border : none;
-        }
+    iframe {
+      border: none;
+    }
 
-        #authBox{
-            padding : 10px;
-        }
+    #authBox {
+      padding: 10px;
+    }
 
-        #authBox label{
-            margin    : 0 0 15px;
-            font-size : 16px;
-            display : block;
-        }
+    #authBox label {
+      margin: 0 0 15px;
+      font-size: 16px;
+      display: block;
+    }
 
-        #authBox div{
-            margin-bottom : 10px;
-        }
+    #authBox div {
+      margin-bottom: 10px;
+    }
 
-        #authBox input{
-            border-radius : 3px;
-            padding       : 5px;
-            border        : 1px solid #aaaaaa;
-        }
+    #authBox input {
+      border-radius: 3px;
+      padding: 5px;
+      border: 1px solid #aaaaaa;
+    }
 
-        #error{
-            color : red;
-        }
-    </style>
+    #error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-    <div id="authBox">
-        <form name="auth" action="">
-            <label>Need authorization in the extension</label>
-            <div>
-                <input placeholder="E-mail" type="email" name="email"/>
-            </div>
-            <div>
-                <input placeholder="Password" type="password" name="password"/>
-            </div>
-            <div id="error"></div>
-            <button>Submit</button>
-        </form>
-    </div>
-    <iframe style="display:none;" id="site" src="https://gold10.stepanmas.com/#!/add" width="800" height="600" align="left"></iframe>
-    <script src="content.js"></script>
+  <div id="authBox">
+    <form name="auth" action="">
+      <label>Need authorization in the extension</label>
+      <div>
+        <input placeholder="E-mail" type="email" name="email" />
+      </div>
+      <div>
+        <input placeholder="Password" type="password" name="password" />
+      </div>
+      <div id="error"></div>
+      <button>Submit</button>
+    </form>
+  </div>
+  <iframe style="display:none;" id="site" src="https://gold10.stepanmas.com/#!/add" width="800" height="600"
+          align="left"></iframe>
+  <script src="content.js"></script>
 </body>
 </html>

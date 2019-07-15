@@ -1,13 +1,13 @@
 <div class="container">
   <div class="row row--reset">
-    <div class="col-xs-12" ng-init="has_en = randomBool() ; visible_en = has_en ; visible_ru = !has_en">
+    <div class="col" ng-init="has_en = randomBool() ; visible_en = has_en ; visible_ru = !has_en">
       <h2 class="m0">Learn</h2>
       <div ng-if="!started" class="btn-group mb10 stickied">
-        <button type="button" class="btn btn-default" ng-model="$parent.visible_en" uib-btn-checkbox
+        <button type="button" class="btn btn-secondary" ng-model="$parent.visible_en" uib-btn-checkbox
                 btn-checkbox-true="true" btn-checkbox-false="false">
           Toggle EN
         </button>
-        <button type="button" class="btn btn-default" ng-model="$parent.visible_ru" uib-btn-checkbox
+        <button type="button" class="btn btn-secondary" ng-model="$parent.visible_ru" uib-btn-checkbox
                 btn-checkbox-true="true" btn-checkbox-false="false">
           Toggle Other
         </button>
@@ -61,7 +61,7 @@
       </ul>
 
       <div ng-if="started" class="text-center">
-        <button ng-if="!item[0].learned" ng-click="ok()" class="btn btn-default key-M">Mark as learned</button>
+        <button ng-if="!item[0].learned" ng-click="ok()" class="btn btn-secondary key-M">Mark as learned</button>
         <button ng-click="start()" class="btn btn-success key-enter">Continue</button>
       </div>
 

@@ -1,5 +1,5 @@
 self.params = {
-  server: 'https://gold10.stepanmas.com',
+  server: 'https://goldten.stepanmas.ru',
   io_params: {
     'path': '/socket.io'
   }

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Gold10",
-  "description": "Learn 10 worlds every day",
+  "description": "Learn 10 words every day",
   "version": "0.0.1",
   "background": {
     "scripts": [
@@ -13,7 +13,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://gold10.stepanmas.com/"
+        "https://goldten.stepanmas.ru/"
       ],
       "js": [
         "content.js"

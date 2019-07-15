@@ -117,7 +117,7 @@
     }
 
     isOurSite() {
-      return window.location.host === 'gold10.stepanmas.com';
+      return window.location.host === 'goldten.stepanmas.ru';
     }
 
     timer() {

@@ -10,8 +10,7 @@ import '@cgross/angular-notify/dist';
 import '@cgross/angular-notify/dist/angular-notify.css';
 
 // Other
-import 'style/global.less';
-import 'font-awesome-webpack2';
+import 'style/global.scss';
 
 // Application
 import Remember from 'remember';
@@ -23,8 +22,7 @@ import 'factorys';
 
 const app = angular.module('app', ['socket', 'getUserData', 'cgNotify', collapse, buttons, uiRouter]);
 
-app
-  .controller('navbar', ['$scope', '$rootScope', '$timeout', Navbar]);
+app.controller('navbar', ['$scope', '$rootScope', '$timeout', Navbar]);
 
 let Config = app.config(
   [

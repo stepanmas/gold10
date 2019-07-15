@@ -5,12 +5,15 @@
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const path = require('path');
   const CopyWebpackPlugin = require('copy-webpack-plugin');
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
   const BUILD_DIR = path.resolve(__dirname, 'public');
   const APP_DIR = path.resolve(__dirname, 'src/frontend');
   const BACK_DIR = path.resolve(__dirname, 'src/backend');
+  const envName = process.env.NODE_ENV;
+  const isDev = envName === 'development';
 
-  let config = {
+  module.exports = {
     context: APP_DIR,
 
     entry: APP_DIR + '/index.js',
@@ -22,22 +25,33 @@
     },
 
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.js?/,
           include: APP_DIR,
           loader: "babel-loader",
           options: {
-            plugins: ['transform-runtime']
+            cacheDirectory: true,
+            babelrc: false,
+            plugins: [
+              ['@babel/plugin-proposal-decorators', { legacy: true }],
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-syntax-dynamic-import',
+            ],
           }
         },
         {
-          test: /\.css$/,
-          loader: 'style-loader!css-loader!postcss-loader?browsers=last 2 version'
-        },
-        {
-          test: /\.less$/,
-          loader: 'style-loader!css-loader!less-loader?resolve url'
+          test: /\.s?css$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: '/',
+              },
+            },
+            'css-loader',
+            'sass-loader',
+          ],
         },
         {
           test: /\.(png|gif|jpg)$/,
@@ -92,6 +106,11 @@
         }
       ),
 
+      new MiniCssExtractPlugin({
+        filename: isDev ? '[name].css' : '[name].[hash].css',
+        chunkFilename: isDev ? '[id].css' : '[id].[hash].css',
+      }),
+
       new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/)
     ],
 
@@ -132,6 +151,4 @@
       }
     }
   };
-
-  module.exports = config;
-}()
+}();
